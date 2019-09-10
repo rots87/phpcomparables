@@ -13,4 +13,14 @@
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('home');
+
+/**
+ * Rutas a controlladores de recursos
+ */
+Route::resource('sector','controllerSector');
+
+/**
+ * Rutas especiales
+ */
+Route::get('sector/{id}/flip','controllerSector@flip')->name('sector.flip');

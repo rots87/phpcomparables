@@ -16,6 +16,7 @@ class SectorTable extends Migration
       Schema::create('tblsector', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->string('nombre');
+          $table->boolean('habilitado')->default('true');
           $table->softDeletes();
           $table->timestamps();
         });

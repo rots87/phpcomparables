@@ -3,17 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class modelSector extends Model
 {
-    use SoftDelete;
+    use SoftDeletes;
 
     protected $table = 'tblsector';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
-      'nombre',
+      'nombre', 'habilitado'
     ];
 
     protected $hidden = [
