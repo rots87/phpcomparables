@@ -30,6 +30,7 @@ class controllerSector extends Controller
       $data = array(
         'title' => 'Ingreso de un nuevo Sector',
         'message' => 'return confirm("¿Esta seguro que desea guardar el sector?")',
+        'method' => 'POST',
       );
         return view('sector.form')
           ->with('data', $data);
@@ -46,7 +47,6 @@ class controllerSector extends Controller
         $data = $request->validate([
           'nombre' => 'unique:tblsector,nombre|required|max:80'
         ]);
-        $data['nombre'] = strtoupper($data['nombre']);
         modelSector::create($data);
         return redirect()->route('sector.index')
           ->with('success','Datos almacenados con exito');
@@ -54,13 +54,12 @@ class controllerSector extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        //TODO: Pendiente este modulo
     }
 
     /**
@@ -71,7 +70,16 @@ class controllerSector extends Controller
      */
     public function edit($id)
     {
-        return view('sector.form');
+      $sector = modelSector::findOrFail($id);
+      $data = array(
+        'title' => 'Edicion del Sector: ',
+        'message' => 'return confirm("¿Esta seguro que desea editar el sector?")',
+        'method' => 'PUT',
+      );
+
+        return view('sector.form')
+          ->with('data', $data)
+          ->with('sector', $sector);
     }
 
     /**
@@ -83,7 +91,12 @@ class controllerSector extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $data = $request->validate([
+        'nombre' => 'unique:tblsector,nombre|required|max:80'
+      ]);
+      modelSector::whereId($id)->update($data);
+      return redirect()->route('sector.index')
+        ->with('success','El sector se ha editado con exito');
     }
 
     /**
