@@ -19,6 +19,9 @@ Route::get('/', function () {
  * Rutas a controlladores de recursos
  */
 Route::resource('sector','controllerSector');
+Route::resource('clientes','controllerCliente',[
+    'except' => ['destroy']
+]);
 
 /**
  * Rutas especiales

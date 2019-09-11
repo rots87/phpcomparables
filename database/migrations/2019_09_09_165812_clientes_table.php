@@ -16,8 +16,12 @@ class ClientesTable extends Migration
         Schema::create('tblclientes', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->string('nombre', 100);
-          $table->string('nombre_corto', 100);
+          $table->string('nombre_corto', 100)->nullable($value = true);
+          $table->text('giro');
+          $table->text('actividad_economica');
+          $table->boolean('estatus')->default(true);
           $table->unsignedBigInteger('sector_id');
+          $table->integer('anio'); //Esta es la ultima oferta aceptada
           $table->softDeletes();
           $table->timestamps();
 

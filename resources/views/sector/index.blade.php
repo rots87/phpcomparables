@@ -7,9 +7,9 @@
     <div class="row justify-content-center">
         <table class="table table-striped col-sm-8">
             <thead class="thead-dark">
-                <th class="col-sm-1">#</th>
-                <th class="col-sm-9">Nombre</th>
-                <th class="col-sm-3">Acciones</th>
+                <th style="width: 10%">#</th>
+                <th style="width: 70%">Nombre</th>
+                <th style="width: 20%">Acciones</th>
             </thead>
             <tbody>
                 @foreach ($data as $sector)
