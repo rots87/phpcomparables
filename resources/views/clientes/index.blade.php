@@ -36,11 +36,13 @@
                     <td>
                         <div class="row">
                             <a href="#" class="btn btn-sm btn-info" role="button"><i class="fas fa-search"></i></a>
-                            <a href="#" class="btn btn-sm btn-warning" role="button"><i class="fas fa-edit"></i></a>
+                            <a href="{{route('clientes.edit',$cliente->id)}}" class="btn btn-sm btn-warning" role="button"><i class="fas fa-edit"></i></a>
+                            {{ Form::open(['route' => ['clientes.destroy',$cliente->id], 'method' => 'delete', 'onsubmit' => 'return confirm("¿Esta seguro que desea eliminar el cliente? \nEsta accion no puede ser deshecha")']) }}
+                                <button type="submit" class="btn btn-sm btn-danger" name="button"><i class="fas fa-times-circle"></i></button>
+                            {{Form::close()}}
                         </div>
                     </td>
                 </tr>
-
                 @endforeach
             </tbody>
         </table>

@@ -91,7 +91,20 @@ class controllerCliente extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $cliente = modelCliente::find($id);
+        $sector = modelSector::find($id);
+        $cliente->sector_nombre = $sector->nombre;
+        $sector = modelSector::orderby('nombre')->get();
+        $data = array(
+            'title' => 'Editar Cliente '.$cliente->nombre,
+            'message' => 'return confirm("¿Esta seguro que desea editar el cliente? \nEstos cambios se veran reflejados en el historico")',
+            'method' => 'PUT',
+          );
+        return view('clientes.form')
+            ->with('sector',$sector)
+            ->with('data',$data)
+            ->with('cliente',$cliente);
     }
 
     /**
@@ -103,6 +116,27 @@ class controllerCliente extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->validate([
+            'nombre' => 'max: 80|required|unique:tblclientes,nombre,'.$id,
+            'sector_id' => 'required',
+            'giro' => 'required',
+            'actividad_economica' => 'required',
+        ]);
+        $data = Arr::add($data, 'nombre_corto', $request->nombre_corto);
+        modelCliente::whereId($id)->update($data);
+        return redirect()->route('clientes.index')
+          ->with('success','Datos almacenados con exito');
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+      $data = modelCliente::findOrFail($id);
+      $data -> delete();
+      return redirect()->route('clientes.index')->with('success', 'Los datos se borraron con exito');
     }
 }
