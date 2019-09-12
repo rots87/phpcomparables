@@ -11,8 +11,8 @@
                 <th style="width: 5%">Estatus</th>
                 <th style="width: 20%">Nombre</th>
                 <th style="width: 20%">Nombre Corto</th>
-                <th style="width: 20%">Giro</th>
-                <th style="width: 10%">Actividad Economica</th>
+                <th style="width: 15%">Giro</th>
+                <th style="width: 15%">Actividad Economica</th>
                 <th style="width: 5%">Sector</th>
                 <th style="width: 8%">Ultimo Año Aceptado</th>
                 <th style="width: 10%">Acciones</th>

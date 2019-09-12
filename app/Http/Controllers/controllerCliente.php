@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\modelCliente;
 use App\modelSector;
+use App\modelHistoricoClientes;
 
 class controllerCliente extends Controller
 {
@@ -123,6 +124,8 @@ class controllerCliente extends Controller
             'actividad_economica' => 'required',
         ]);
         $data = Arr::add($data, 'nombre_corto', $request->nombre_corto);
+        $cliente = modelCliente::find($id);
+        self::assing_clientes_to_history($id);
         modelCliente::whereId($id)->update($data);
         return redirect()->route('clientes.index')
           ->with('success','Datos almacenados con exito');
@@ -139,4 +142,23 @@ class controllerCliente extends Controller
       $data -> delete();
       return redirect()->route('clientes.index')->with('success', 'Los datos se borraron con exito');
     }
+
+    /**
+     *
+     * @param  int  $id
+     */
+    private function assing_clientes_to_history($id) {
+        $cliente = modelCliente::find($id);
+        $history = array(
+            'cliente_id' => $id,
+            'nombre' => $cliente->nombre,
+            'nombre_corto' => $cliente->nombre_corto,
+            'giro' => $cliente->giro,
+            'actividad_economica' => $cliente->actividad_economica,
+            'estatus' => $cliente->estatus,
+            'sector_id' => $cliente->sector_id,
+        );
+        modelHistoricoClientes::create($history);
+    }
+
 }
