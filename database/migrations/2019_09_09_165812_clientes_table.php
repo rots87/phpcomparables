@@ -21,7 +21,7 @@ class ClientesTable extends Migration
           $table->text('actividad_economica');
           $table->boolean('estatus')->default(true);
           $table->unsignedBigInteger('sector_id');
-          $table->integer('anio'); //Esta es la ultima oferta aceptada
+          $table->integer('anio')->nullable($value = true); //Esta es la ultima oferta aceptada
           $table->softDeletes();
           $table->timestamps();
 

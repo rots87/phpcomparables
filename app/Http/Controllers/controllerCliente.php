@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Pagination\Paginator;
 use App\modelCliente;
 use App\modelSector;
 use App\modelHistoricoClientes;
+use App\modelOferta;
 
 class controllerCliente extends Controller
 {
@@ -64,8 +66,6 @@ class controllerCliente extends Controller
             'giro' => 'required',
             'actividad_economica' => 'required',
         ]);
-
-        $data = Arr::add($data, 'anio', date('Y'));
         $data = Arr::add($data, 'estatus', false);
         $data = Arr::add($data, 'nombre_corto', $request->nombre_corto);
         modelCliente::create($data);
@@ -81,7 +81,21 @@ class controllerCliente extends Controller
      */
     public function show($id)
     {
-        //
+        $cliente = modelCliente::findOrFail($id);
+        $sector = modelSector::find($id);
+        $cliente->sector_nombre = $sector->nombre;
+        $historico = modelHistoricoClientes::where('cliente_id',$id)->get();
+        $ofertas = modelOferta::orderBy('anio','desc')
+            ->where('cliente_id',$id)
+            ->paginate(2);
+        foreach ($historico as $data) {
+            $sector = modelSector::find($data->sector_id);
+            $data->sector_nombre = $sector->nombre;
+        }
+        return view('clientes.perfil')
+            ->with('cliente',$cliente)
+            ->with('historico',$historico)
+            ->with('ofertas',$ofertas);
     }
 
     /**
@@ -92,8 +106,7 @@ class controllerCliente extends Controller
      */
     public function edit($id)
     {
-
-        $cliente = modelCliente::find($id);
+        $cliente = modelCliente::findOrFail($id);
         $sector = modelSector::find($id);
         $cliente->sector_nombre = $sector->nombre;
         $sector = modelSector::orderby('nombre')->get();

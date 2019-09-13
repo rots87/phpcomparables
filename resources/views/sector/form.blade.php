@@ -3,7 +3,7 @@
 @section('contenido')
   <h3 class="text-center" style="margin: 5px;">{{$data['title']}}</h3>
   @if ($data['method']=='POST')
-      {!! Form::open(['route' => 'sector.create', 'method' => $data['method'], 'onsubmit' => $data['message']]) !!}
+      {!! Form::open(['route' => 'sector.store', 'method' => $data['method'], 'onsubmit' => $data['message']]) !!}
   @else
     {!! Form::open(['route' => ['sector.update',$sector->id], 'method' => $data['method'], 'onsubmit' => $data['message']]) !!}
 

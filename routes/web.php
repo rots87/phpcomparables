@@ -20,8 +20,11 @@ Route::get('/', function () {
  */
 Route::resource('sector','controllerSector');
 Route::resource('clientes','controllerCliente');
+Route::resource('ofertas','controllerOfertas');
 
 /**
  * Rutas especiales
  */
 Route::get('sector/{id}/flip','controllerSector@flip')->name('sector.flip');
+Route::get('ofertas/{id}/aceptar','controllerOfertas@aceptar')->name('ofertas.aceptar');
+Route::get('ofertas/{id}/rechazar','controllerOfertas@rechazar')->name('ofertas.rechazar');
