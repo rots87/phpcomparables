@@ -36,9 +36,7 @@
                         </h6>
                     </td>
                     <td>
-                        <div class="row">
-                            <a href="{{route('ofertas.edit',$oferta->id)}}" class="btn btn-sm btn-primary"
-                                role="button"><i class="fas fa-edit"></i></a>
+                        <div class="row justify-content-center">
                             @if ($oferta->estatus == 'ENVIADA')
                             <a href="{{route('ofertas.aceptar',$oferta->id)}}" class="btn btn-sm btn-success"
                                 role="button"><i class="fas fa-check"></i></a>

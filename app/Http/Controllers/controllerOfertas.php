@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\modelCliente;
+use App\modelEstudios;
+use App\modelGeneralEstudios;
 use App\modelOferta;
 use Illuminate\Http\Request;
-use PhpParser\Node\Stmt\Foreach_;
+
 
 class controllerOfertas extends Controller
 {
@@ -79,40 +81,6 @@ class controllerOfertas extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -131,6 +99,30 @@ class controllerOfertas extends Controller
         $data2 = modelCliente::findOrFail($data->cliente_id);
         $data2->anio = ($data2->anio < $data->anio) ? $data->anio : $data2->anio;
         $data2->estatus = true;
+        $data3 = modelGeneralEstudios::where('anio',$data->anio)->first();
+        if ($data3 != null) {
+            $data3->totalEPT = $data3->totalEPT + 1;
+            $ept = array(
+                'cliente_id' => $data->cliente_id,
+                'anio' => $data->anio,
+                'estatus' => 'EN MAQUETACION',
+            );
+            modelGeneralEstudios::whereId($data3->id)->update($data3->toArray());
+            modelEstudios::create($ept);
+        } else {
+            $data3 = array(
+                'anio' => $data->anio,
+                'totalEPT' => 1,
+                'progreso' => 0,
+            );
+            $ept = array(
+                'cliente_id' => $data->cliente_id,
+                'anio' => $data->anio,
+                'estatus' => 'EN MAQUETACION',
+            );
+            modelGeneralEstudios::create($data3);
+            modelEstudios::create($ept);
+        }
         modelCliente::whereId($data->cliente_id)->update($data2->toarray());
         modelOferta::whereId($id)->update($data->toarray());
         return redirect()->route('ofertas.index')

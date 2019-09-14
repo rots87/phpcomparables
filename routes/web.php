@@ -20,7 +20,11 @@ Route::get('/', function () {
  */
 Route::resource('sector','controllerSector');
 Route::resource('clientes','controllerCliente');
-Route::resource('ofertas','controllerOfertas');
+Route::resource('ofertas','controllerOfertas')
+    ->except('show', 'edit', 'update');
+Route::resource('estudios','controllerEstudios')
+    ->only('index', 'show');
+
 
 /**
  * Rutas especiales
