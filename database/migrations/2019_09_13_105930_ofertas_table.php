@@ -16,7 +16,7 @@ class OfertasTable extends Migration
         Schema::create('tblofertas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->year('anio');
-            $table->unsignedInteger('cliente_id');
+            $table->unsignedBigInteger('cliente_id');
             $table->string('estatus')->default('ENVIADA');
             $table->timestamps();
             $table->foreign('cliente_id')->references('id')->on('tblclientes');

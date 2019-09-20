@@ -15,7 +15,7 @@ class HistoricoClientesTable extends Migration
     {
         Schema::create('tblhistoricoclientes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('cliente_id');
+            $table->unsignedBigInteger('cliente_id');
             $table->string('nombre', 100);
             $table->string('nombre_corto', 100)->nullable($value = true);
             $table->text('giro');

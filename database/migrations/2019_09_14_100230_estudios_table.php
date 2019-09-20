@@ -15,7 +15,7 @@ class EstudiosTable extends Migration
     {
         Schema::create('tblestudios', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('cliente_id');
+            $table->unsignedBigInteger('cliente_id');
             $table->integer('anio');
             $table->string('estatus')->default('EN MAQUETACION');
             /**
