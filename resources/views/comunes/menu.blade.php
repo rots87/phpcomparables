@@ -7,7 +7,7 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown active">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Generales
@@ -19,15 +19,14 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="{{route('clientes.index')}}">Clientes <span
-                        class="sr-only">(current)</span></a>
-            </li>
             <li class="nav-item">
+                <a class="nav-link active" href="{{route('clientes.index')}}">Clientes</a>
+            </li>
+            <li class="nav-item active">
                 <a class="nav-link" href="#">Empresas</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Estados Financieros
                 </a>
@@ -38,8 +37,8 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Estatus</a>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{route('estudios.index')}}">Estudio de Precios</a>
             </li>
         </ul>
     </div>

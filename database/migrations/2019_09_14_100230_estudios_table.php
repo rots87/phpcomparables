@@ -31,6 +31,8 @@ class EstudiosTable extends Migration
              */
             //$table->string('encargado')->nullable(true);
             $table->timestamps();
+
+            $table->foreign('cliente_id')->references('id')->on('tblclientes');
         });
     }
 
