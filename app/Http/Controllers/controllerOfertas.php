@@ -105,7 +105,7 @@ class controllerOfertas extends Controller
             $ept = array(
                 'cliente_id' => $data->cliente_id,
                 'anio' => $data->anio,
-                'estatus' => 'EN MAQUETACION',
+                'estatus' => 'EN ACTUALIZACION',
             );
             modelGeneralEstudios::whereId($data3->id)->update($data3->toArray());
             modelEstudios::create($ept);
@@ -118,7 +118,7 @@ class controllerOfertas extends Controller
             $ept = array(
                 'cliente_id' => $data->cliente_id,
                 'anio' => $data->anio,
-                'estatus' => 'EN MAQUETACION',
+                'estatus' => 'EN ACTUALIZACION',
             );
             modelGeneralEstudios::create($data3);
             modelEstudios::create($ept);

@@ -3,12 +3,12 @@
 @section('contenido')
 <h3 class="text-center" style="margin: 5px;">Listado de clientes para el Ejecicio {{$anio}}</h3>
 <div class="container">
-    <div class="row">
-        <table class="table table-striped">
+    <div class="row justify-content-sm-center">
+        <table class="table table-striped table-sm table-responsive-sm">
             <thead class="thead-dark text-center">
                 <th style="width: 5%">#</th>
                 <th style="width: 25%">Empresa</th>
-                <th style="width: 10%">Progreso</th>
+                <th style="width: 5%">Progreso</th>
                 <th style="width: 20%">Estado Actual</th>
                 <th style="width: 20%">Acciones</th>
             </thead>
@@ -25,12 +25,12 @@
                     <form action="">
                         <div class="form-group">
                             <div class="row">
-                                <select name="progreso" id="progreso" class="form-control">
+                                <select name="progreso" id="progreso" class="form-control col-sm-5">
                                     @foreach($estatus as $estado)
                                         <option value="{{ $loop->iteration }}">{{ $estado }}</option>
                                     @endforeach
                                 </select>    
-                                <button type="submit" class="btn btn-primary btn-sm" style="margin:5px">Guardar avance</button>
+                                <button type="submit" class="btn btn-primary btn-sm col-sm-5" style="margin:5px">Guardar avance</button>
                             </div>
                         </div>
                     </form>

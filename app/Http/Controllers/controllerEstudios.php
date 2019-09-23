@@ -35,7 +35,7 @@ class controllerEstudios extends Controller
             $estudio->cliente_nombre = $nombre->nombre;
         };
         $estatus = array(
-            '0' => 'EN MAQUETACION',
+            '0' => 'ACTUALIZADO',
             '1' => 'EN PROCESO',
             '2' => 'REVISION INTERNA',
             '3' => 'EN CORRECCION INTERNA',
