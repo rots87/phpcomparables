@@ -15,28 +15,30 @@
             <tbody>
                 <?php $x = 0; ?>
                 @foreach ($data as $estudio)
-                <th class="text-center">{!! $x = $x + 1;!!}</th>
-                <td>{{ $estudio->cliente_nombre }}</td>
-                <td class="text-center">{{ ($estudio->progreso/8)*100 }}%</td>
-                <td class="text-center">
-                    <h5><span class="badge badge-info">{{$estudio->estatus}}</span></h5>
-                </td>
-                <td>
-                    {!! Form::open(['route' => ['estudios.progress', $estudio->id], 'method'=>'PUT']) !!}
+                <tr>
+                    <th class="text-center">{!! $x = $x + 1;!!}</th>
+                    <td>{{ $estudio->cliente_nombre }}</td>
+                    <td class="text-center">{{ ($estudio->progreso/8)*100 }}%</td>
+                    <td class="text-center">
+                        <h5><span class="badge badge-info">{{$estatus[$estudio->progreso]}}</span></h5>
+                    </td>
+                    <td>
+                        {!! Form::open(['route' => ['estudios.progress', $estudio->id], 'method'=>'PUT']) !!}
                         <div class="form-group">
                             <div class="row">
                                 <select name="progreso" id="progreso" class="form-control col-sm-9">
                                     @foreach($estatus as $estado)
-                                        <option value="{{ $loop->iteration }}">{{ $estado }}</option>
+                                    <option value="{{ $loop->iteration }}">{{ $estado }}</option>
                                     @endforeach
-                                </select>    
+                                </select>
                                 <button type="submit" class="btn btn-primary btn-sm" style="margin:5px">
                                     <i class="fas fa-cloud-upload-alt"></i>
                                 </button>
                             </div>
                         </div>
-                    </form>
-                </td>
+                        </form>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
@@ -44,11 +46,13 @@
 </div>
 <script>
     function confirmar() {
-        if (confirm('Cada modificacion afecta directamente el progreso anual y del EPT.\n¿Esta seguro de modificarlo?')) {
+        if (confirm(
+            'Cada modificacion afecta directamente el progreso anual y del EPT.\n¿Esta seguro de modificarlo?')) {
             return true;
         } else {
             return false;
         }
     }
+
 </script>
 @endsection

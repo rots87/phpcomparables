@@ -11,14 +11,15 @@ class controllerEstudios extends Controller
 {
 
     public static $estatus = [
-        '0' => 'ACTUALIZADO',
-        '1' => 'EN PROCESO',
-        '2' => 'REVISION INTERNA',
-        '3' => 'EN CORRECCION INTERNA',
-        '4' => 'REVISION CLIENTE',
-        '5' => 'EN CORRECCION CLIENTE',
-        '6' => 'EN PROCESO DE IMPRESION',
-        '7' => 'ENTREGADO',
+        '0' => 'POR ACTUALIZAR',
+        '1' => 'ACTUALIZADO',
+        '2' => 'EN DESARROLLO',
+        '3' => 'EN REVISION INTERNA',
+        '4' => 'EN CORRECCION',
+        '5' => 'EN REVISION DEL CLIENTE',
+        '6' => 'EN CORRECCION DEL CLIENTE',
+        '7' => 'LISTO PARA IMPRIMIR',
+        '8' => 'ENTREGADO',
     ];
 
     /**
@@ -46,7 +47,7 @@ class controllerEstudios extends Controller
             $nombre = modelCliente::find($estudio->cliente_id);
             $estudio->cliente_nombre = $nombre->nombre;
         };
-
+       //dd($data);
         return view('estudios.show')
             ->with('data',$data)
             ->with('anio',$anio)
@@ -61,7 +62,15 @@ class controllerEstudios extends Controller
      * @return \Illuminate\Http\Response
      */
     public function progress(Request $request, $id){
-        $data = self::$estatus;
-        dd($id);
+        $data = modelEstudios::findOrFail($id);
+        $value = $data->progreso;
+        $data->progreso = $request->progreso - 1;
+        $value = $data->progreso - $value;
+        $general = modelGeneralEstudios::where('anio',$data->anio)->first();
+        $general->progreso = $general->progreso + $value;
+        modelGeneralEstudios::whereId($general->id)->update($general->toArray());
+        modelEstudios::whereId($id)->update($data->toArray());
+        return redirect()->route('estudios.show',$data->anio)
+          ->with('success','Datos almacenados con exito');
     }
 }

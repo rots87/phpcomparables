@@ -17,7 +17,7 @@ class EstudiosTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('cliente_id');
             $table->integer('anio');
-            $table->string('estatus')->default('EN MAQUETACION');
+            $table->integer('progreso')->default(0);
             /**
              * Los estados posibles serian:
              * En Maquetacion 1
