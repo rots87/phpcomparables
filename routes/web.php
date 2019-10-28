@@ -32,3 +32,4 @@ Route::resource('estudios','controllerEstudios')
 Route::get('sector/{id}/flip','controllerSector@flip')->name('sector.flip');
 Route::get('ofertas/{id}/aceptar','controllerOfertas@aceptar')->name('ofertas.aceptar');
 Route::get('ofertas/{id}/rechazar','controllerOfertas@rechazar')->name('ofertas.rechazar');
+Route::put('estudios/{id}','controllerEstudios@progress')->name('estudios.progress');

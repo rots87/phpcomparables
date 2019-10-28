@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 
 class controllerEstudios extends Controller
 {
+
+    public static $estatus = [
+        '0' => 'ACTUALIZADO',
+        '1' => 'EN PROCESO',
+        '2' => 'REVISION INTERNA',
+        '3' => 'EN CORRECCION INTERNA',
+        '4' => 'REVISION CLIENTE',
+        '5' => 'EN CORRECCION CLIENTE',
+        '6' => 'EN PROCESO DE IMPRESION',
+        '7' => 'ENTREGADO',
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -34,30 +46,22 @@ class controllerEstudios extends Controller
             $nombre = modelCliente::find($estudio->cliente_id);
             $estudio->cliente_nombre = $nombre->nombre;
         };
-        $estatus = array(
-            '0' => 'ACTUALIZADO',
-            '1' => 'EN PROCESO',
-            '2' => 'REVISION INTERNA',
-            '3' => 'EN CORRECCION INTERNA',
-            '4' => 'REVISION CLIENTE',
-            '5' => 'EN CORRECCION CLIENTE',
-            '6' => 'EN PROCESO DE IMPRESION',
-            '7' => 'ENTREGADO',
-        );
+
         return view('estudios.show')
             ->with('data',$data)
             ->with('anio',$anio)
-            ->with('estatus',$estatus);
+            ->with('estatus',self::$estatus);
     }
 
     /**
      * Efectua los diferentes cambios en el progreso de los estudios
      *
+     * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @param int $value
      * @return \Illuminate\Http\Response
      */
-    public function progress($id, $value){
-
+    public function progress(Request $request, $id){
+        $data = self::$estatus;
+        dd($id);
     }
 }

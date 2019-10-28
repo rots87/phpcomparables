@@ -22,15 +22,17 @@
                     <h5><span class="badge badge-info">{{$estudio->estatus}}</span></h5>
                 </td>
                 <td>
-                    <form action="">
+                    {!! Form::open(['route' => ['estudios.progress', $estudio->id], 'method'=>'PUT']) !!}
                         <div class="form-group">
                             <div class="row">
-                                <select name="progreso" id="progreso" class="form-control col-sm-5">
+                                <select name="progreso" id="progreso" class="form-control col-sm-9">
                                     @foreach($estatus as $estado)
                                         <option value="{{ $loop->iteration }}">{{ $estado }}</option>
                                     @endforeach
                                 </select>    
-                                <button type="submit" class="btn btn-primary btn-sm col-sm-5" style="margin:5px">Guardar avance</button>
+                                <button type="submit" class="btn btn-primary btn-sm" style="margin:5px">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -40,4 +42,13 @@
         </table>
     </div>
 </div>
+<script>
+    function confirmar() {
+        if (confirm('Cada modificacion afecta directamente el progreso anual y del EPT.\n¿Esta seguro de modificarlo?')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 @endsection
