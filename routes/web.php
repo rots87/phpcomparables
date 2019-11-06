@@ -33,3 +33,5 @@ Route::get('sector/{id}/flip','controllerSector@flip')->name('sector.flip');
 Route::get('ofertas/{id}/aceptar','controllerOfertas@aceptar')->name('ofertas.aceptar');
 Route::get('ofertas/{id}/rechazar','controllerOfertas@rechazar')->name('ofertas.rechazar');
 Route::put('estudios/{id}','controllerEstudios@progress')->name('estudios.progress');
+Route::get('estudios/{id}/resumen','controllerEstudios@resume')->name('estudios.resume');
+Route::get('estudios/{id}/detalle','controllerEstudios@detail')->name('estudios.detail');

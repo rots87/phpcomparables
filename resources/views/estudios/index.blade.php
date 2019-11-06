@@ -15,24 +15,29 @@
             </thead>
             <tbody>
                 @foreach ($data as $estudios)
-                <th>1</th>
-                <td>{{$estudios->anio}}</td>
-                <td>{{$estudios->totalEPT}}</td>
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar"
-                            style="width: {{ number_format($estudios->progreso/($estudios->totalEPT*8),2)*100 }}%;"
-                            aria-valuenow="{{ ($estudios->progreso/($estudios->totalEPT*8))*100 }}" aria-valuemin="0"
-                            aria-valuemax="100">{{ number_format($estudios->progreso/($estudios->totalEPT*8),2)*100 }}%
+                <tr>
+                    <th>{{ $loop->iteration }}</th>
+                    <td>{{$estudios->anio}}</td>
+                    <td>{{$estudios->totalEPT}}</td>
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar"
+                                style="width: {{ number_format($estudios->progreso/($estudios->totalEPT*8),2)*100 }}%;"
+                                aria-valuenow="{{ ($estudios->progreso/($estudios->totalEPT*8))*100 }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                                {{ number_format($estudios->progreso/($estudios->totalEPT*8),2)*100 }}%
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    <div class="row">
-                        <a href="{{route('estudios.show',$estudios->anio)}}" class="btn btn-sm btn-info" role="button"><i
-                                class="fas fa-search"></i></a>
-                    </div>
-                </td>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <a href="{{route('estudios.show',$estudios->anio)}}" class="btn btn-sm btn-info"
+                                role="button"><i class="fas fa-search"></i></a>
+                                <a href="{{route('estudios.resume',$estudios->anio)}}" class="btn btn-sm btn-success"
+                                    role="button"><i class="fas fa-chart-pie"></i></a>
+                        </div>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>

@@ -28,7 +28,12 @@
                             <div class="row">
                                 <select name="progreso" id="progreso" class="form-control col-sm-9">
                                     @foreach($estatus as $estado)
+                                    @if ($estatus[$estudio->progreso] == $estatus[$loop->iteration - 1])
+                                    <option value="{{ $loop->iteration }}" selected>{{ $estado }}</option>
+                                    @else
                                     <option value="{{ $loop->iteration }}">{{ $estado }}</option>
+                                    @endif
+
                                     @endforeach
                                 </select>
                                 <button type="submit" class="btn btn-primary btn-sm" style="margin:5px">
@@ -47,7 +52,7 @@
 <script>
     function confirmar() {
         if (confirm(
-            'Cada modificacion afecta directamente el progreso anual y del EPT.\n¿Esta seguro de modificarlo?')) {
+                'Cada modificacion afecta directamente el progreso anual y del EPT.\n¿Esta seguro de modificarlo?')) {
             return true;
         } else {
             return false;
