@@ -24,7 +24,7 @@ Route::resource('ofertas','controllerOfertas')
     ->except('show', 'edit', 'update');
 Route::resource('estudios','controllerEstudios')
     ->only('index', 'show');
-
+Route::resource('arrendamientos', 'controllerArrendamientos');
 
 /**
  * Rutas especiales
