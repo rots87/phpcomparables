@@ -22,7 +22,7 @@
     </div>
     <br>
     <div class="container-fluid">
-      <div class="row form-group">
+      <div class="row form-group allign-content-center">
           <button type="submit" class="btn btn-sm btn-success col-sm-2 offset-sm-7" name="button">Guardar</button>
       </div>
     </div>

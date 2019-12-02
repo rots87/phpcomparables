@@ -39,7 +39,7 @@ class controllerArrendamientos extends Controller
         try {
             if($request->hasFile('foto')){
                 $file = $request->file('foto');
-                $name = time().$file->getClientOriginalName();
+                $name = time();
                 $file->move(public_path().'/localarr/', $name);
             } else {
                 return redirect()->back()->withErrors('existe un error con el archivo adjunto');
@@ -53,8 +53,8 @@ class controllerArrendamientos extends Controller
                 'departamento' => 'required',
                 'web' => 'required'
             ]);
-            $data = Arr::add($data, 'tipo', 'local');
-            $data = Arr::add($data, 'foto', $name);
+            //Arr::add($data, 'tipo', 'local'); TODO: Pendiente de hacer la integracion con el nuevo modelo
+            Arr::add($data, 'foto', $name);
             modelArrendamientos::create($data);
             return redirect()->route('arrendamientos.index')
                 ->with('success','Datos almacenados con exito');

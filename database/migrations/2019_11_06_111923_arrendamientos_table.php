@@ -16,7 +16,7 @@ class ArrendamientosTable extends Migration
         Schema::create('tblarrendamientos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('anio');
-            $table->string('tipo');
+            $table->unsignedBigInteger('tipoarrendamiento_id');
             $table->integer('mt2')->default('0');
             $table->decimal('precio',8,2)->default('0');
             $table->string('direccion');
@@ -25,6 +25,8 @@ class ArrendamientosTable extends Migration
             $table->string('web');
             $table->string('foto');
             $table->timestamps();
+
+            $table->foreign('tipoarrendamiento_id')->references('id')->on('tbltipoarrendamiento');
         });
     }
 

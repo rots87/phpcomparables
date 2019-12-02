@@ -25,6 +25,8 @@ Route::resource('ofertas','controllerOfertas')
 Route::resource('estudios','controllerEstudios')
     ->only('index', 'show');
 Route::resource('arrendamientos', 'controllerArrendamientos');
+Route::resource('tipoarrendamiento', 'controllerTipoArrendamiento')
+    ->only('index','create','destroy');
 
 /**
  * Rutas especiales

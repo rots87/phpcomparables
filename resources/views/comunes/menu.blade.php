@@ -13,8 +13,9 @@
                     Generales
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{route('sector.index')}}">Sector</a>
                     <a class="dropdown-item" href="{{route('ofertas.index')}}">Ofertas</a>
+                    <a class="dropdown-item" href="{{route('sector.index')}}">Sector</a>
+                    <a class="dropdown-item" href="{{route('tipoarrendamiento.index')}}">Tipos de Arrendamientos</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
