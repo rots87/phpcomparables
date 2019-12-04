@@ -30,7 +30,7 @@ class controllerTipoArrendamiento extends Controller
      */
     public function create()
     {
-        //
+        return view('tipoarrendamiento.create');
     }
 
     /**
@@ -41,7 +41,12 @@ class controllerTipoArrendamiento extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'nombre' => 'unique:tbltipoarrendamiento,nombre|required|max:80'
+          ]);
+          modelTipoArrendamiento::create($data);
+          return redirect()->route('tipoarrendamiento.index')
+            ->with('success','Datos almacenados con exito');
     }
 
     /**

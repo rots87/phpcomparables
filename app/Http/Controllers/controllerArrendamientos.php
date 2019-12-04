@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use App\modelArrendamientos;
+use App\modelTipoArrendamiento;
+use Illuminate\Support\Facades\Storage;
 
 class controllerArrendamientos extends Controller
 {
@@ -15,7 +17,18 @@ class controllerArrendamientos extends Controller
      */
     public function index()
     {
-        return view('arrendamientos.index');
+        $data = collect();
+        $firstAnio = modelArrendamientos::orderBy('anio','ASC')->first();
+        if($firstAnio==null){
+            return view('arrendamientos.create')
+            ->withErrors('Aún no ha ingresado ningun arrendamiento');
+
+        }
+        for ($i = date('Y'); $i >= $firstAnio->anio; $i--) {
+            $data->push(['anio'=>$i,'value'=>modelArrendamientos::where('anio','=',$i)->count()]);
+        }
+        return view('arrendamientos.index')
+            ->with('data',$data);
     }
 
     /**
@@ -25,7 +38,9 @@ class controllerArrendamientos extends Controller
      */
     public function create()
     {
-        return view('arrendamientos.create');
+        $data = modelTipoArrendamiento::get();
+        return view('arrendamientos.create')
+            ->with('data',$data);
     }
 
     /**
@@ -36,32 +51,42 @@ class controllerArrendamientos extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            if($request->hasFile('foto')){
-                $file = $request->file('foto');
-                $name = time();
-                $file->move(public_path().'/localarr/', $name);
-            } else {
-                return redirect()->back()->withErrors('existe un error con el archivo adjunto');
-            }
-            $data = $request->validate([
+
+            $this->validate($request, [
                 'anio' => 'required',
                 'mt2' => 'required',
                 'precio' => 'required',
                 'direccion' => 'required',
                 'municipio' => 'required',
                 'departamento' => 'required',
-                'web' => 'required'
+                'web' => 'required',
             ]);
-            //Arr::add($data, 'tipo', 'local'); TODO: Pendiente de hacer la integracion con el nuevo modelo
-            Arr::add($data, 'foto', $name);
-            modelArrendamientos::create($data);
+
+            $data = new modelArrendamientos;
+            if($request->hasFile('foto')){
+                $imageName = (string) time().'.'.$request->file('foto')->getClientOriginalExtension();
+                $data->foto = $imageName;
+                //$request->foto->move(public_path().'/localarr/', $imageName);
+                $path = $request->foto->storeAs('localarr', $imageName);
+            } else {
+                return redirect()->back()->withErrors('existe un error con el archivo adjunto');
+            }
+
+
+            $data->anio = $request->anio;
+            $data->tipoarrendamiento_id = $request->tipo;
+            $data->mt2 = $request->mt2;
+            $data->precio = $request->precio;
+            $data->direccion = $request->direccion;
+            $data->municipio = $request->municipio;
+            $data->departamento = $request->departamento;
+            $data->web = $request->web;
+
+            //dd($data);
+            $data->save();
             return redirect()->route('arrendamientos.index')
                 ->with('success','Datos almacenados con exito');
 
-        } catch (\Throwable $th) {
-            return redirect()->back()->withErrors('Error al procesar los datos');
-        }
     }
 
     /**

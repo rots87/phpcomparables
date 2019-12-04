@@ -13,16 +13,19 @@
                 <th class="col-sm-3">Acciones</th>
             </thead>
             <tbody>
-                {{-- TODO:Pendiente de hacer el foreach --}}
-                <th></th>
-                <td></td>
-                <td></td>
+                @foreach ($data as $arrendamiento)
+                <tr>
+                    <td>{{ $arrendamiento['anio'] }}</td>
+                    <td>{{ $arrendamiento['value'] }}</td>
+                    <td></td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
     <div class="row justify-content-end">
         <a class="btn btn-primary col-sm-4" href="{{route('arrendamientos.create')}}">
-                <i class="fas fa-plus-circle"></i> Añadir nuevo Comparable
+            <i class="fas fa-plus-circle"></i> Añadir nuevo Comparable
         </a>
         <span class="col-sm-3"></span>
     </div>
