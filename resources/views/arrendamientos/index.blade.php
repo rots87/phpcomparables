@@ -17,7 +17,10 @@
                 <tr>
                     <td>{{ $arrendamiento['anio'] }}</td>
                     <td>{{ $arrendamiento['value'] }}</td>
-                    <td></td>
+                    <td>
+                        <a href="{{route('arrendamientos.show',$arrendamiento['anio'])}}" class="btn btn-sm btn-info"
+                            role="button"><i class="fas fa-search"></i></a>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

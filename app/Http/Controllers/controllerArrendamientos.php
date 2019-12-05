@@ -92,12 +92,28 @@ class controllerArrendamientos extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $anio
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($anio, $filter=null)
     {
-        //
+        if($filter!=null){
+            $data = modelArrendamientos::join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
+                                        ->where('anio','=',$anio)
+                                        ->where('tipoarrendamiento_id','=',$filter)
+                                        ->get();
+        }else {
+            $data = modelArrendamientos::join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
+                                        ->where('anio','=',$anio)
+                                        ->get();
+        }
+        $filter = modelTipoArrendamiento::get();
+        return view('arrendamientos.show')
+            ->with('data',$data)
+            ->with('filter',$filter)
+            ->with('anio',$anio);
+
+
     }
 
     /**
