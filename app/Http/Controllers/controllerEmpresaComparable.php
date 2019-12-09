@@ -88,8 +88,9 @@ class controllerEmpresaComparable extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function estado_financiero()
+    public function nuevo_eeff()
     {
         dd('Nuevo comparable');
+        return view('empresacomparale.index');
     }
 }

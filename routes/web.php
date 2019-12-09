@@ -40,4 +40,4 @@ Route::put('estudios/{id}','controllerEstudios@progress')->name('estudios.progre
 Route::get('estudios/{id}/resumen','controllerEstudios@resume')->name('estudios.resume');
 Route::get('estudios/{id}/detalle','controllerEstudios@detail')->name('estudios.detail');
 Route::get('arrendamientos/{anio}/{filter?}','controllerarrendamientos@show')->name('arrendamientos.show');
-Route::get('empresacomparable/nuevo_eeff','controllerEmpresaComparable@estado_financiero')->name('empresacomparable.nuevo_eeff');
+Route::get('empresacomparable/nuevo_eeff','controllerEmpresaComparable@nuevo_eeff')->name('empresacomparable.nuevo_eeff');
