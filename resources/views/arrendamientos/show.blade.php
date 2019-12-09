@@ -20,7 +20,7 @@
             <tbody>
                 @foreach ($data as $arrendamiento)
                 <tr>
-                    <th>{!! $arrendamiento->id !!}</th>
+                    <th>{!! $loop->iteration !!}</th>
                     <td>{!! $arrendamiento->nombre !!}</td>
                     <td>{!! $arrendamiento->mt2 !!}</td>
                     <td>{!! $arrendamiento->precio !!}</td>
@@ -29,18 +29,21 @@
                     <td>{!! $arrendamiento->departamento !!}</td>
                     <td>
                         <div class="row">
-                            <button type="button" id="copy" name="copy" onclick="doCopy('{!! $arrendamiento->web !!}');" class="btn btn-primary btn-sm">
+                            <button type="button" id="copy" name="copy" onclick="doCopy('{!! $arrendamiento->web !!}');"
+                                class="btn btn-primary btn-sm">
                                 <i class="far fa-copy"></i>
                             </button>
-                            <button type="button" id="visit" name="visit" onclick="doUrl('{!! $arrendamiento->web !!}');" class="btn btn-success btn-sm">
+                            <button type="button" id="visit" name="visit"
+                                onclick="doUrl('{!! $arrendamiento->web !!}');" class="btn btn-success btn-sm">
                                 <i class="fas fa-share"></i>
                             </button>
                         </div>
                     </td>
                     <td>
                         <div class="row">
-                            <button type="button" id="visit" name="visit" onclick="doImage('{!! $arrendamiento->foto !!}');" class="btn btn-warning btn-sm">
-                                    <i class="fas fa-eye"></i>
+                            <button type="button" id="visit" name="visit"
+                                onclick="doImage('{!! $arrendamiento->foto !!}');" class="btn btn-warning btn-sm">
+                                <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </td>
@@ -49,45 +52,49 @@
             </tbody>
         </table>
     </div>
-    <div class="row justify-content-end">
-        <select name="filter" id="filter" class="form-control col-sm-2">
-            <option value="">TODOS</option>
-        @foreach ($filter as $data)
-            <option value="{!! $data->id !!}">{!! $data->nombre !!}</option>
-        @endforeach
-    </select>
-    <button type="button" id="filter" name="filter" onclick="doFilter();" class="btn btn-primary btn-sm">
-        <i class="fas fa-search"></i>
-    </button>
+    <div class="row justify-content-between">
+        <a href="{{route('arrendamientos.create')}}" class="btn btn-success">Nuevo Arrendamiento</a>
+        <div class="row col-sm-4 justify-content-end">
+            <select name="filter" id="filter" class="form-control col-md-6 col-sm-3">
+                <option value="">TODOS</option>
+                @foreach ($filter as $data)
+                <option value="{!! $data->id !!}">{!! $data->nombre !!}</option>
+                @endforeach
+            </select>
+            <button type="button" id="filter" name="filter" onclick="doFilter();" class="btn btn-primary btn-sm">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
     </div>
 </div>
 @endsection
 
 @section('scripts footer')
-    <script type="text/javascript">
-        function doFilter() {
-            var filter = document.getElementById("filter").value;
-            var url = {!! json_encode(route('arrendamientos.show',$anio)) !!};
-            window.open(url+"/"+filter,"_self");
-        };
+<script type="text/javascript">
+    function doFilter() {
+        var filter = document.getElementById("filter").value;
+        var url = {!!json_encode(route('arrendamientos.show', $anio)) !!};
+        window.open(url + "/" + filter, "_self");
+    };
 
-        function doCopy(url) {
-            var urlHelper = document.createElement("input");
-            urlHelper.className = 'urlHelper';
-            document.body.appendChild(urlHelper);
-            urlHelper.value = url;
-            urlHelper.select();
-            document.execCommand('copy');
-            document.body.removeChild(urlHelper);
-        };
+    function doCopy(url) {
+        var urlHelper = document.createElement("input");
+        urlHelper.className = 'urlHelper';
+        document.body.appendChild(urlHelper);
+        urlHelper.value = url;
+        urlHelper.select();
+        document.execCommand('copy');
+        document.body.removeChild(urlHelper);
+    };
 
-        function doUrl(url) {
-            window.open(url,"_blank");
-        };
+    function doUrl(url) {
+        window.open(url, "_blank");
+    };
 
-        function doImage(image) {
-            var url = {!! json_encode(url('/localarr/')) !!}+'/'+image;
-            window.open(url,"_blank");
-        }
-    </script>
+    function doImage(image) {
+        var url = {!!json_encode(url('/localarr/')) !!} + '/' + image;
+        window.open(url, "_blank");
+    }
+
+</script>
 @endsection

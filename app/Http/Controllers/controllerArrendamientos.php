@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use App\modelArrendamientos;
+use Illuminate\Http\Request;
 use App\modelTipoArrendamiento;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class controllerArrendamientos extends Controller
 {
@@ -19,16 +18,21 @@ class controllerArrendamientos extends Controller
     {
         $data = collect();
         $firstAnio = modelArrendamientos::orderBy('anio','ASC')->first();
-        if($firstAnio==null){
-            return view('arrendamientos.create')
+        if(empty($firstAnio)){
+            return redirect()->route('arrendamientos.create')
             ->withErrors('Aún no ha ingresado ningun arrendamiento');
 
         }
         for ($i = date('Y'); $i >= $firstAnio->anio; $i--) {
             $data->push(['anio'=>$i,'value'=>modelArrendamientos::where('anio','=',$i)->count()]);
         }
-        return view('arrendamientos.index')
+        if ($data->isEmpty()) {
+            return view('arrendamientos.create')
+            ->withErrors('No existe ningun arrendamiento disponible. por favor ingrese uno.');
+        } else {
+            return view('arrendamientos.index')
             ->with('data',$data);
+        }
     }
 
     /**
@@ -66,13 +70,10 @@ class controllerArrendamientos extends Controller
             if($request->hasFile('foto')){
                 $imageName = (string) time().'.'.$request->file('foto')->getClientOriginalExtension();
                 $data->foto = $imageName;
-                //$request->foto->move(public_path().'/localarr/', $imageName);
-                $path = $request->foto->storeAs('localarr', $imageName);
+                $path = $request->file('foto')->storeAs('localarr',$imageName);
             } else {
                 return redirect()->back()->withErrors('existe un error con el archivo adjunto');
             }
-
-
             $data->anio = $request->anio;
             $data->tipoarrendamiento_id = $request->tipo;
             $data->mt2 = $request->mt2;
@@ -81,8 +82,6 @@ class controllerArrendamientos extends Controller
             $data->municipio = $request->municipio;
             $data->departamento = $request->departamento;
             $data->web = $request->web;
-
-            //dd($data);
             $data->save();
             return redirect()->route('arrendamientos.index')
                 ->with('success','Datos almacenados con exito');
@@ -98,16 +97,19 @@ class controllerArrendamientos extends Controller
     public function show($anio, $filter=null)
     {
         if($filter!=null){
-            $data = modelArrendamientos::join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
-                                        ->where('anio','=',$anio)
-                                        ->where('tipoarrendamiento_id','=',$filter)
-                                        ->get();
+            $data = DB::table('tblarrendamientos')
+                        ->join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
+                        ->where('anio','=',$anio)
+                        ->where('tipoarrendamiento_id','=',$filter)
+                        ->get();
         }else {
-            $data = modelArrendamientos::join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
-                                        ->where('anio','=',$anio)
-                                        ->get();
+            $data = DB::table('tblarrendamientos')
+                        ->join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
+                        ->where('anio','=',$anio)
+                        ->get();
         }
         $filter = modelTipoArrendamiento::get();
+        // dd($data);
         return view('arrendamientos.show')
             ->with('data',$data)
             ->with('filter',$filter)
