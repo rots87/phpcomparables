@@ -32,7 +32,9 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{route('arrendamientos.index')}}">Arrendamientos</a>
-                    <a class="dropdown-item" href="#">Empresas</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{route('empresacomparable.nuevo_eeff')}}">Empresas Comparables</a>
+                    <a class="dropdown-item" href="#">Estados Financieros</a>
                 </div>
             </li>
             <li class="nav-item active">
