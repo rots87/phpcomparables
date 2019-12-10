@@ -16,16 +16,17 @@ class EmpresasComparablesTable extends Migration
         Schema::create('tblempresacomparable', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->year('ejercicio');
-            $table->float('ingresos',12,2);
-            $table->float('ingresos_financieros',12,2);
-            $table->float('otros_ingresos',12,2);
-            $table->float('gastos_venta',12,2);
-            $table->float('gastos_admon',12,2);
-            $table->float('gastos_finan',12,2);
-            $table->float('otros_gastos',12,2);
-            $table->float('isr',12,2);
-            $table->float('reserva_legal',12,2);
-            $table->float('gnd',12,2);
+            $table->integer('ingresos');
+            $table->integer('ingresos_financieros');
+            $table->integer('otros_ingresos');
+            $table->integer('costo_venta');
+            $table->integer('gastos_venta');
+            $table->integer('gastos_admon');
+            $table->integer('gastos_finan');
+            $table->integer('otros_gastos');
+            $table->integer('isr');
+            $table->integer('reserva_legal');
+            $table->integer('gnd');
             $table->unsignedBigInteger('empresa_id');
             $table->timestamps();
 

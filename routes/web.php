@@ -15,6 +15,21 @@ Route::get('/', function () {
     return view('index');
 })->name('home');
 
+
+/**
+ * Rutas especiales
+ */
+Route::get('sector/{id}/flip','controllerSector@flip')->name('sector.flip');
+Route::get('ofertas/{id}/aceptar','controllerOfertas@aceptar')->name('ofertas.aceptar');
+Route::get('ofertas/{id}/rechazar','controllerOfertas@rechazar')->name('ofertas.rechazar');
+Route::put('estudios/{id}','controllerEstudios@progress')->name('estudios.progress');
+Route::get('estudios/{id}/resumen','controllerEstudios@resume')->name('estudios.resume');
+Route::get('estudios/{id}/detalle','controllerEstudios@detail')->name('estudios.detail');
+Route::get('arrendamientos/{anio}/{filter?}','controllerArrendamientos@show')->name('arrendamientos.show');
+Route::get('empresacomparable/nuevoef/{emp?}','controllerEmpresaComparable@nuevoef')->name('empresacomparable.nuevoef');
+Route::post('empresacomparable/vistaprevia','controllerEmpresaComparable@vistaprevia')->name('empresacomparable.vistaprevia');
+Route::post('empresacomparable/storeef','controllerEmpresaComparable@storeef')->name('empresacomparable.storeef');
+
 /**
  * Rutas a controlladores de recursos
  */
@@ -29,15 +44,3 @@ Route::resource('arrendamientos', 'controllerArrendamientos')
 Route::resource('tipoarrendamiento', 'controllerTipoArrendamiento')
     ->only('index', 'create', 'store', 'destroy');
 Route::resource('empresacomparable','controllerEmpresaComparable');
-
-/**
- * Rutas especiales
- */
-Route::get('sector/{id}/flip','controllerSector@flip')->name('sector.flip');
-Route::get('ofertas/{id}/aceptar','controllerOfertas@aceptar')->name('ofertas.aceptar');
-Route::get('ofertas/{id}/rechazar','controllerOfertas@rechazar')->name('ofertas.rechazar');
-Route::put('estudios/{id}','controllerEstudios@progress')->name('estudios.progress');
-Route::get('estudios/{id}/resumen','controllerEstudios@resume')->name('estudios.resume');
-Route::get('estudios/{id}/detalle','controllerEstudios@detail')->name('estudios.detail');
-Route::get('arrendamientos/{anio}/{filter?}','controllerarrendamientos@show')->name('arrendamientos.show');
-Route::get('empresacomparable/nuevo_eeff','controllerEmpresaComparable@nuevo_eeff')->name('empresacomparable.nuevo_eeff');
