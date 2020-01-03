@@ -1,4 +1,5 @@
 @extends('index')
+
 @section('contenido')
 <p>
     <h3 class="text-center">Nuevo Comparable de Arrendamiento</h3>

@@ -27,7 +27,7 @@ class controllerArrendamientos extends Controller
             $data->push(['anio'=>$i,'value'=>modelArrendamientos::where('anio','=',$i)->count()]);
         }
         if ($data->isEmpty()) {
-            return view('arrendamientos.create')
+            return redirect()->route('arrendamientos.create')
             ->withErrors('No existe ningun arrendamiento disponible. por favor ingrese uno.');
         } else {
             return view('arrendamientos.index')

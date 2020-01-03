@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\modelEmpresaComparable;
+use App\modelEFComparable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use PhpParser\Node\Stmt\TryCatch;
+use App\modelEmpresaComparable;
+use Illuminate\Support\Facades\DB;
 
 class controllerEmpresaComparable extends Controller
 {
@@ -67,7 +67,14 @@ class controllerEmpresaComparable extends Controller
      */
     public function show($id)
     {
-        //
+        $empresa = modelEmpresaComparable::findOrFail($id);
+        $ef = modelEFComparable::where('empresa_id','=',$id)
+            ->orderBy('ejercicio','desc')
+            ->get();
+        // dd($empresa->nombre);
+        return view('empresacomparable.show')
+            ->with('empresa', $empresa)
+            ->with('ef', $ef);
     }
 
     /**
@@ -130,12 +137,11 @@ class controllerEmpresaComparable extends Controller
     public function nuevoef($emp=null)
     {
         $empresas = modelEmpresaComparable::get();
-        // if(isset($emp)){
-        //     $data = modelEmpresaComparable::findOrFail($emp);
-        //     dd($data);
-        // }else{
-        //     dd('hola');
-        // }
+        if(isset($emp)){
+            $data = modelEmpresaComparable::findOrFail($emp);
+        }else{
+            $data = modelEmpresaComparable::all()->first();
+        }
         return view('empresacomparable.nuevoef')
             ->with('empresas',$empresas)
             ->with('id',$emp);
@@ -178,6 +184,58 @@ class controllerEmpresaComparable extends Controller
      */
     public function storeef(Request $request)
     {
-        dd($request);
+        //Actualizacion del EF mas reciente
+        $empresa = modelEmpresaComparable::whereId($request->empresa_id)->first();
+        $empresa = $empresa->toarray();
+        if ($empresa['last_ef'] < $request->ejercicio) {
+          DB::table('tblempresa')
+            ->where('id', $request->empresa_id)
+            ->update(['last_ef' => $request->ejercicio]);
+        }
+        modelEFComparable::create($request->all());
+        return redirect()->route('empresacomparable.index')
+                ->with('success','Datos almacenados con exito');
+    }
+
+    /**
+     * Undocumented function
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function showef(int $id){
+        $ejercicio = modelEFComparable::findOrFail($id);
+        $ejercicioAnt = modelEFComparable::where('ejercicio','=',$ejercicio->ejercicio - 1)->first();
+        if(!isset($ejercicioAnt)){
+            $ejercicioAnt = new modelEFComparable();
+            $ejercicioAnt->ingresos = 0;
+            $ejercicioAnt->ingresos_financieros = 0;
+            $ejercicioAnt->otros_ingresos = 0;
+            $ejercicioAnt->costo_venta = 0;
+            $ejercicioAnt->gastos_venta = 0;
+            $ejercicioAnt->gastos_admon = 0;
+            $ejercicioAnt->gastos_finan = 0;
+            $ejercicioAnt->otros_gastos = 0;
+            $ejercicioAnt->isr = 0;
+            $ejercicioAnt->reserva_legal = 0;
+            $ejercicioAnt->gnd = 0;
+        }
+        $promedio = new modelEFComparable();
+        $promedio->ingresos = ($ejercicio->ingresos + $ejercicioAnt->ingresos)/2;
+        $promedio->ingresos_financieros = ($ejercicio->ingresos_financieros + $ejercicioAnt->ingresos_financieros)/2;
+        $promedio->otros_ingresos = ($ejercicio->otros_ingresos + $ejercicioAnt->otros_ingresos)/2;
+        $promedio->costo_venta = ($ejercicio->costo_venta + $ejercicioAnt->costo_venta)/2;
+        $promedio->gastos_venta = ($ejercicio->gastos_venta + $ejercicioAnt->gastos_venta)/2;
+        $promedio->gastos_admon = ($ejercicio->gastos_admon + $ejercicioAnt->gastos_admon)/2;
+        $promedio->gastos_finan = ($ejercicio->gastos_finan + $ejercicioAnt->gastos_finan)/2;
+        $promedio->otros_gastos = ($ejercicio->otros_gastos + $ejercicioAnt->otros_gastos)/2;
+        $promedio->isr = ($ejercicio->isr + $ejercicioAnt->isr)/2;
+        $promedio->reserva_legal = ($ejercicio->reserva_legal + $ejercicioAnt->reserva_legal)/2;
+        $promedio->gnd = ($ejercicio->gnd + $ejercicioAnt->gnd)/2;
+        //dd(($ejercicio->ingreso + $ejercicioAnt->ingreso)/2);
+        return view('empresacomparable.showef')
+            ->with('ejercicio', $ejercicio)
+            ->with('ejercicioAnt', $ejercicioAnt)
+            ->with('promedio', $promedio);
     }
 }

@@ -94,7 +94,7 @@
             </div>
     </div>
     <div class="row justify-content-end form-group">
-        <button type="submit">Vista Previa</button>
+        <button type="submit" class="btn btn-success">Vista Previa</button>
     </div>
 </div>
 {!! Form::close() !!}

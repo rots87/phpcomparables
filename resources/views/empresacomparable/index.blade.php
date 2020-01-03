@@ -24,10 +24,11 @@
                     <td>{{ $comparable->nit }}</td>
                     <td>{{ $comparable->expediente }}</td>
                     <td>{{ $comparable->giro }}</td>
-                    <td></td>
+                    <td>{{ $comparable->last_ef }}</td>
                     <td>
                         <div class="row">
-                            <a href="" class="btn btn-sm btn-primary"><i class="far fa-eye"></i></a>
+                            <a href="{{route('empresacomparable.show',$comparable->id)}}"
+                                class="btn btn-sm btn-primary"><i class="far fa-eye"></i></a>
                             <a href="{{route('empresacomparable.edit',$comparable->id)}}" class="btn btn-sm btn-warning"
                                 title="Editar empresa"><i class="fas fa-pencil-alt"></i></a>
                             <a href="{{route('empresacomparable.nuevoef',$comparable->id)}}"

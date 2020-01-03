@@ -19,6 +19,7 @@ class EmpresasTable extends Migration
             $table->string('nit',80);
             $table->string('expediente',80);
             $table->string('giro',80);
+            $table->string('last_ef',4)->nullable();
             $table->timestamps();
         });
     }

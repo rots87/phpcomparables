@@ -25,10 +25,10 @@ Route::get('ofertas/{id}/rechazar','controllerOfertas@rechazar')->name('ofertas.
 Route::put('estudios/{id}','controllerEstudios@progress')->name('estudios.progress');
 Route::get('estudios/{id}/resumen','controllerEstudios@resume')->name('estudios.resume');
 Route::get('estudios/{id}/detalle','controllerEstudios@detail')->name('estudios.detail');
-Route::get('arrendamientos/{anio}/{filter?}','controllerArrendamientos@show')->name('arrendamientos.show');
 Route::get('empresacomparable/nuevoef/{emp?}','controllerEmpresaComparable@nuevoef')->name('empresacomparable.nuevoef');
 Route::post('empresacomparable/vistaprevia','controllerEmpresaComparable@vistaprevia')->name('empresacomparable.vistaprevia');
 Route::post('empresacomparable/storeef','controllerEmpresaComparable@storeef')->name('empresacomparable.storeef');
+Route::get('empresacomparable/showef/{id}','controllerEmpresaComparable@showef')->name('empresacomparable.showef');
 
 /**
  * Rutas a controlladores de recursos
@@ -39,8 +39,8 @@ Route::resource('ofertas','controllerOfertas')
     ->except('show', 'edit', 'update');
 Route::resource('estudios','controllerEstudios')
     ->only('index', 'show');
-Route::resource('arrendamientos', 'controllerArrendamientos')
-    ->except('show');
+Route::resource('arrendamientos', 'controllerArrendamientos');
+Route::get('arrendamientos/{anio}/{filter?}','controllerArrendamientos@show')->name('arrendamientos.show');
 Route::resource('tipoarrendamiento', 'controllerTipoArrendamiento')
     ->only('index', 'create', 'store', 'destroy');
 Route::resource('empresacomparable','controllerEmpresaComparable');

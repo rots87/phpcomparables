@@ -11,7 +11,7 @@ class modelEmpresaComparable extends Model
     protected $primarykey = 'id';
 
     protected $fillable = [
-        'nombre','nit','giro','expediente',
+        'nombre','nit','giro','expediente','last_ef'
     ];
 
     protected $hidden = [

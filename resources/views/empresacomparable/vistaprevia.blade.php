@@ -6,6 +6,7 @@
         {{$empresa_nombre}}</h3>
 </p>
 {!! Form::open(array('route' => 'empresacomparable.storeef', 'method' => 'POST')) !!}
+{!! Form::hidden('empresa_id', $ef->empresa_id) !!}
 {!! Form::hidden('ejercicio', $ef->ejercicio) !!}
 {!! Form::hidden('ingresos', $ef->ingresos) !!}
 {!! Form::hidden('ingresos_financieros', $ef->ingresos_financieros) !!}
@@ -134,12 +135,10 @@
             <b>{{number_format(($ef->ingresos - $ef->costo_venta - ($ef->gastos_venta + $ef->gastos_admon + $ef->gastos_finan + $ef->otros_gastos) + ($ef->otros_ingresos + $ef->ingresos_financieros) - $ef->reserva - $ef->isr), 0)}}</b>
         </span>
     </div>
-</div>
-</div>
-<div class="row justify-content-end">
-    <a href="javascript:history.back()" class="btn btn-sm btn-danger" style="margin: 5px">Atras</a>
-    <button type="submit" class="btn btn-sm btn-success" style="margin: 5px">Guardar</button>
-</div>
+    <div class="row justify-content-end">
+        <a href="javascript:history.back()" class="btn btn-sm btn-danger" style="margin: 5px">Atras</a>
+        <button type="submit" class="btn btn-sm btn-success" style="margin: 5px">Guardar</button>
+    </div>
 </div>
 {!! Form::close() !!}
 @endsection
