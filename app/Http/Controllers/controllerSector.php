@@ -15,7 +15,7 @@ class controllerSector extends Controller
      */
     public function index()
     {
-        $data = modelSector::orderby('nombre')->paginate(8);
+        $data = modelSector::orderby('sec_nombre')->paginate(8);
         return view('sector.index')
           ->with('data', $data);
     }
@@ -44,9 +44,11 @@ class controllerSector extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-          'nombre' => 'unique:tblsector,nombre|required|max:80'
+        $this->validate($request, [
+          'nombre' => 'unique:tblsector,sec_nombre|required|max:80'
         ]);
+
+        $data['sec_nombre'] = $request->nombre;
         modelSector::create($data);
         return redirect()->route('sector.index')
           ->with('success','Datos almacenados con exito');
@@ -92,9 +94,9 @@ class controllerSector extends Controller
     public function update(Request $request, $id)
     {
       $data = $request->validate([
-        'nombre' => 'unique:tblsector,nombre|required|max:80'
+        'sec_nombre' => 'unique:tblsector,sec_nombre|required|max:80'
       ]);
-      modelSector::whereId($id)->update($data);
+      modelSector::where('sec_id','=',$id)->update($data);
       return redirect()->route('sector.index')
         ->with('success','El sector se ha editado con exito');
     }
@@ -122,9 +124,9 @@ class controllerSector extends Controller
     public function flip($id)
     {
       $data = modelSector::findOrFail($id);
-      $data->habilitado = !$data->habilitado;
-      modelSector::whereId($id)->update($data->toarray());
-      if ($data->habilitado) {
+      $data->sec_habilitado = !$data->sec_habilitado;
+      modelSector::where('sec_id','=',$id)->update($data->toarray());
+      if ($data->sec_habilitado) {
         return redirect()->route('sector.index')
           ->with('success','El sector se ha habilitado con exito');
       } else {

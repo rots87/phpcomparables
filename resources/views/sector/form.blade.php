@@ -5,7 +5,7 @@
   @if ($data['method']=='POST')
       {!! Form::open(['route' => 'sector.store', 'method' => $data['method'], 'onsubmit' => $data['message']]) !!}
   @else
-    {!! Form::open(['route' => ['sector.update',$sector->id], 'method' => $data['method'], 'onsubmit' => $data['message']]) !!}
+    {!! Form::open(['route' => ['sector.update',$sector->sec_id], 'method' => $data['method'], 'onsubmit' => $data['message']]) !!}
 
   @endif
 
@@ -15,7 +15,7 @@
           <input type="text" class="form-control col-sm-5" name="nombre" id="nombre"
           onkeyup="this.value = this.value.toUpperCase();" required
           @if ($data['method']=='PUT')
-            value="{{$sector->nombre}}"
+            value="{{$sector->sec_nombre}}"
           @endif
           >
         </div>
