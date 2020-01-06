@@ -15,10 +15,10 @@
                 @foreach ($data as $tarrendamiento)
                 <tr>
                     <th>{{$loop->iteration}}</th>
-                    <td>{{$tarrendamiento->nombre}}</td>
+                    <td>{{$tarrendamiento->tar_nombre}}</td>
                     <td>
                         <div class="row justify-content-center">
-                            {{ Form::open(['route' => ['tipoarrendamiento.destroy',$tarrendamiento->id], 'method' => 'delete', 'onsubmit' => 'return confirm("¿Esta seguro que desea eliminar el tipo de arrendamiento?")']) }}
+                            {{ Form::open(['route' => ['tipoarrendamiento.destroy',$tarrendamiento->tar_id], 'method' => 'delete', 'onsubmit' => 'return confirm("¿Esta seguro que desea eliminar el tipo de arrendamiento?")']) }}
                             <button type="submit" class="btn btn-sm btn-danger" name="button"><i
                                     class="fas fa-times-circle"></i></button>
                             {{Form::close()}}

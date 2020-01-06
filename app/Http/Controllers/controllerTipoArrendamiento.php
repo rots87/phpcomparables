@@ -41,9 +41,10 @@ class controllerTipoArrendamiento extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nombre' => 'unique:tbltipoarrendamiento,nombre|required|max:80'
+        $this->validate($request, [
+            'nombre' => 'unique:tbltipoarrendamiento,tar_nombre|required|max:80'
           ]);
+          $data['tar_nombre'] = $request->nombre;
           modelTipoArrendamiento::create($data);
           return redirect()->route('tipoarrendamiento.index')
             ->with('success','Datos almacenados con exito');
