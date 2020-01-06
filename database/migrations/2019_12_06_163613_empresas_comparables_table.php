@@ -14,23 +14,23 @@ class EmpresasComparablesTable extends Migration
     public function up()
     {
         Schema::create('tblempresacomparable', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->year('ejercicio');
-            $table->integer('ingresos');
-            $table->integer('ingresos_financieros');
-            $table->integer('otros_ingresos');
-            $table->integer('costo_venta');
-            $table->integer('gastos_venta');
-            $table->integer('gastos_admon');
-            $table->integer('gastos_finan');
-            $table->integer('otros_gastos');
-            $table->integer('isr');
-            $table->integer('reserva_legal');
-            $table->integer('gnd');
+            $table->bigIncrements('eco_id');
+            $table->year('eco_ejercicio');
+            $table->integer('eco_ingresos');
+            $table->integer('eco_ingresos_financieros');
+            $table->integer('eco_otros_ingresos');
+            $table->integer('eco_costo_venta');
+            $table->integer('eco_gastos_venta');
+            $table->integer('eco_gastos_admon');
+            $table->integer('eco_gastos_finan');
+            $table->integer('eco_otros_gastos');
+            $table->integer('eco_isr');
+            $table->integer('eco_reserva_legal');
+            $table->integer('eco_gnd');
             $table->unsignedBigInteger('empresa_id');
             $table->timestamps();
 
-            $table->foreign('empresa_id')->references('id')->on('tblempresa');
+            $table->foreign('empresa_id')->references('emp_id')->on('tblempresa');
         });
     }
 

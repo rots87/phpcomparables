@@ -14,8 +14,8 @@ class TipoArrendamientoTable extends Migration
     public function up()
     {
         Schema::create('tbltipoarrendamiento', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombre');
+            $table->bigIncrements('tar_id');
+            $table->string('tar_nombre');
             $table->timestamps();
         });
     }

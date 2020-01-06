@@ -37,6 +37,17 @@
                     <a class="dropdown-item" href="{{route('empresacomparable.nuevoef')}}">Estados Financieros</a>
                 </div>
             </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Analisis
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{route('analisis.arrendamientos')}}">Arrendamientos</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{route('empresacomparable.index')}}">Estados Financieros</a>
+                </div>
+            </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{{route('estudios.index')}}">Estudio de Precios</a>
             </li>

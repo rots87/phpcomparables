@@ -14,10 +14,10 @@ class EstudiosTable extends Migration
     public function up()
     {
         Schema::create('tblestudios', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('est_id');
             $table->unsignedBigInteger('cliente_id');
-            $table->integer('anio');
-            $table->integer('progreso')->default(0);
+            $table->integer('est_anio');
+            $table->integer('est_progreso')->default(0);
             /**
              * Los estados posibles serian:
              * En Maquetacion 1
@@ -32,7 +32,7 @@ class EstudiosTable extends Migration
             //$table->string('encargado')->nullable(true);
             $table->timestamps();
 
-            $table->foreign('cliente_id')->references('id')->on('tblclientes');
+            $table->foreign('cliente_id')->references('cli_id')->on('tblclientes');
         });
     }
 

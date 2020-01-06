@@ -44,3 +44,8 @@ Route::get('arrendamientos/{anio}/{filter?}','controllerArrendamientos@show')->n
 Route::resource('tipoarrendamiento', 'controllerTipoArrendamiento')
     ->only('index', 'create', 'store', 'destroy');
 Route::resource('empresacomparable','controllerEmpresaComparable');
+Route::prefix('analisis')->group(function () {
+    Route::get('arrendamientos', 'controllerAnalisis@indexArrendamiento')->name('analisis.arrendamientos');
+    Route::get('arrendamientos/{anio}/{filter?}', 'controllerAnalisis@showArrendamiento')->name('analisis.showArrendamientos');
+    Route::post('analisis/analisis/arrendamientos', 'controllerAnalisis@analisisArrendamientos')->name('analisis.analisisArrendamientos');
+});

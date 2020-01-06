@@ -14,12 +14,12 @@ class EmpresasTable extends Migration
     public function up()
     {
         Schema::create('tblempresa', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nombre',80);
-            $table->string('nit',80);
-            $table->string('expediente',80);
-            $table->string('giro',80);
-            $table->string('last_ef',4)->nullable();
+            $table->bigIncrements('emp_id');
+            $table->string('emp_nombre',80);
+            $table->string('emp_nit',80);
+            $table->string('emp_expediente',80);
+            $table->string('emp_giro',80);
+            $table->string('emp_last_ef',4)->nullable();
             $table->timestamps();
         });
     }

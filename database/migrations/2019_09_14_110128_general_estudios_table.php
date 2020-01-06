@@ -15,10 +15,10 @@ class GeneralEstudiosTable extends Migration
     public function up()
     {
         Schema::create('tblgeneralestudios', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('anio');
-            $table->integer('totalEPT')->default('0');
-            $table->integer('progreso');
+            $table->bigIncrements('ges_id');
+            $table->integer('ges_anio');
+            $table->integer('ges_totalEPT')->default('0');
+            $table->integer('ges_progreso');
             $table->timestamps();
         });
     }

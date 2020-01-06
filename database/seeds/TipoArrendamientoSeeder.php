@@ -13,19 +13,19 @@ class TipoArrendamientoSeeder extends Seeder
     public function run()
     {
         DB::table('tbltipoarrendamiento')->insert(([
-            'nombre' => 'BODEGAS',
+            'tar_nombre' => 'BODEGAS',
         ]));
 
         DB::table('tbltipoarrendamiento')->insert(([
-            'nombre' => 'LOCAL COMERCIAL',
+            'tar_nombre' => 'LOCAL COMERCIAL',
         ]));
 
         DB::table('tbltipoarrendamiento')->insert(([
-            'nombre' => 'TERRENOS',
+            'tar_nombre' => 'TERRENOS',
         ]));
 
         DB::table('tbltipoarrendamiento')->insert(([
-            'nombre' => 'VEHICULOS',
+            'tar_nombre' => 'VEHICULOS',
         ]));
     }
 }

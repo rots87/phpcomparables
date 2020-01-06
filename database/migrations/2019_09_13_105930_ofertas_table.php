@@ -14,12 +14,12 @@ class OfertasTable extends Migration
     public function up()
     {
         Schema::create('tblofertas', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->year('anio');
+            $table->bigIncrements('ofe_id');
+            $table->year('ofe_anio');
             $table->unsignedBigInteger('cliente_id');
-            $table->string('estatus')->default('ENVIADA');
+            $table->string('ofe_estatus')->default('ENVIADA');
             $table->timestamps();
-            $table->foreign('cliente_id')->references('id')->on('tblclientes');
+            $table->foreign('cliente_id')->references('cli_id')->on('tblclientes');
         });
 
     }

@@ -14,21 +14,22 @@ class HistoricoClientesTable extends Migration
     public function up()
     {
         Schema::create('tblhistoricoclientes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('hcl_id');
             $table->unsignedBigInteger('cliente_id');
-            $table->string('nombre', 100);
-            $table->string('nombre_corto', 100)->nullable($value = true);
-            $table->text('giro');
-            $table->text('actividad_economica');
-            $table->boolean('estatus')->default(true);
-            $table->integer('sector_id');
+            $table->string('hcl_nombre', 100);
+            $table->string('hcl_nombre_corto', 100)->nullable($value = true);
+            $table->text('hcl_giro');
+            $table->text('hcl_actividad_economica');
+            $table->boolean('hcl_estatus')->default(true);
+            $table->unsignedBigInteger('sector_id');
             $table->timestamps();
 
             /**
            * Seccion de llaves foraneas
            */
 
-          $table->foreign('cliente_id')->references('id')->on('tblclientes');
+          $table->foreign('cliente_id')->references('cli_id')->on('tblclientes');
+          $table->foreign('sector_id')->references('sec_id')->on('tblsector');
           });
     }
 
