@@ -11,13 +11,13 @@ class modelCliente extends Model
 
     protected $table = 'tblclientes';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'cli_id';
 
     protected $fillable = [
-      'nombre', 'nombre_corto', 'sector_id', 'giro','actividad_economica','estatus','anio',
+      'cli_nombre', 'cli_nombre_corto', 'sector_id', 'cli_giro','cli_actividad_economica','cli_estatus','cli_anio',
     ];
 
     protected $hidden = [
-        'id',
+        'cli_id',
     ];
 }

@@ -8,13 +8,13 @@ class modelHistoricoClientes extends Model
 {
     protected $table = 'tblhistoricoclientes';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'hcl_id';
 
     protected $fillable = [
-      'nombre', 'nombre_corto', 'giro', 'actividad_economica','estatus','sector_id','cliente_id',
+      'hcl_nombre', 'hcl_nombre_corto', 'hcl_giro', 'hcl_actividad_economica','hcl_estatus','sector_id','cliente_id',
     ];
 
     protected $hidden = [
-      'id'
+      'hcl_id'
     ];
 }

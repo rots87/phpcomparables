@@ -8,13 +8,13 @@ class modelArrendamientos extends Model
 {
     protected $table = 'tblarrendamientos';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'arr_id';
 
     protected $fillable = [
-      'anio','tipo','mt2','precio','direccion','municipio','departamento','web','foto',
+      'arr_anio','arr_tipo','arr_mt2','arr_precio','arr_direccion','arr_municipio','arr_departamento','arr_web','arr_foto',
     ];
 
     protected $hidden = [
-        'id',
+        'arr_id',
     ];
 }

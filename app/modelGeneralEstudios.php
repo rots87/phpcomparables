@@ -8,13 +8,13 @@ class modelGeneralEstudios extends Model
 {
     protected $table = 'tblgeneralestudios';
 
-    protected $primarykey = 'id';
+    protected $primarykey = 'ges_id';
 
     protected $fillable = [
-        'anio', 'totalEPT', 'progreso',
+        'ges_anio', 'ges_totalEPT', 'ges_progreso',
     ];
 
     protected $hidden = [
-        'id',
+        'ges_id',
     ];
 }

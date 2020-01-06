@@ -8,13 +8,13 @@ class modelTipoArrendamiento extends Model
 {
     protected $table = 'tbltipoarrendamiento';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'tar_id';
 
     protected $fillable = [
-      'nombre'
+      'tar_nombre'
     ];
 
     protected $hidden = [
-      'id'
+      'tar_id'
     ];
 }

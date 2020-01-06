@@ -11,13 +11,13 @@ class modelSector extends Model
 
     protected $table = 'tblsector';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'sec_id';
 
     protected $fillable = [
-      'nombre', 'habilitado'
+      'sec_nombre', 'sec_habilitado'
     ];
 
     protected $hidden = [
-      'id'
+      'sec_id'
     ];
 }

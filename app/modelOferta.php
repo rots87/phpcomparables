@@ -8,13 +8,13 @@ class modelOferta extends Model
 {
     protected $table = 'tblofertas';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'ofe_id';
 
     protected $fillable = [
-      'anio', 'cliente_id', 'estatus'
+      'ofe_anio', 'cliente_id', 'ofe_estatus'
     ];
 
     protected $hidden = [
-      'id'
+      'ofe_id'
     ];
 }

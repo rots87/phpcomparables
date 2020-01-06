@@ -8,15 +8,15 @@ class modelEFComparable extends Model
 {
     protected $table = 'tblempresacomparable';
 
-    protected $primarykey = 'id';
+    protected $primarykey = 'eco_id';
 
     protected $fillable = [
-        'ejercicio','ingresos','ingresos_financieros','otros_ingresos', 'costo_venta',
-        'gastos_venta','gastos_admon','gastos_finan','otros_gastos',
-        'isr','reserva_legal','gnd','empresa_id',
+        'eco_ejercicio','eco_ingresos','eco_ingresos_financieros','eco_otros_ingresos', 'eco_costo_venta',
+        'eco_gastos_venta','eco_gastos_admon','eco_gastos_finan','eco_otros_gastos',
+        'eco_isr','eco_reserva_legal','eco_gnd','eco_empresa_id',
     ];
 
     protected $hidden = [
-        'id',
+        'eco_id',
     ];
 }
