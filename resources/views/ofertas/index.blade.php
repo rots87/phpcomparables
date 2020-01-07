@@ -17,11 +17,11 @@
                 @foreach ($ofertas as $oferta)
                 <tr>
                     <th>{{$loop->iteration}}</th>
-                    <td>{{$oferta->cliente_nombre}}</td>
-                    <td>{{$oferta->anio}}</td>
+                    <td>{{$oferta->cliente->cli_nombre}}</td>
+                    <td>{{$oferta->ofe_anio}}</td>
                     <td>
                         <h6>
-                            @switch($oferta->estatus)
+                            @switch($oferta->ofe_estatus)
                             @case('ACEPTADA')
                             <span class="badge badge-success">
                                 @break
@@ -31,19 +31,19 @@
                                     @default
                                     <span class="badge badge-primary">
                                         @endswitch
-                                        {{$oferta->estatus}}
+                                        {{$oferta->ofe_estatus}}
                                     </span>
                         </h6>
                     </td>
                     <td>
                         <div class="row justify-content-center">
-                            @if ($oferta->estatus == 'ENVIADA')
-                            <a href="{{route('ofertas.aceptar',$oferta->id)}}" class="btn btn-sm btn-success"
+                            @if ($oferta->ofe_estatus == 'ENVIADA')
+                            <a href="{{route('ofertas.aceptar',$oferta->ofe_id)}}" class="btn btn-sm btn-success"
                                 role="button"><i class="fas fa-check"></i></a>
-                            <a href="{{route('ofertas.rechazar',$oferta->id)}}" class="btn btn-sm btn-warning"
+                            <a href="{{route('ofertas.rechazar',$oferta->ofe_id)}}" class="btn btn-sm btn-warning"
                                 role="button"><i class="fas fa-ban"></i></a>
                             @endif
-                            {{ Form::open(['route' => ['ofertas.destroy',$oferta->id], 'method' => 'delete', 'onsubmit' => 'return confirm("¿Esta seguro que desea eliminar la oferta?")']) }}
+                            {{ Form::open(['route' => ['ofertas.destroy',$oferta->ofe_id], 'method' => 'delete', 'onsubmit' => 'return confirm("¿Esta seguro que desea eliminar la oferta?")']) }}
                             <button type="submit" class="btn btn-sm btn-danger" name="button"><i
                                     class="fas fa-times-circle"></i></button>
                             {{Form::close()}}

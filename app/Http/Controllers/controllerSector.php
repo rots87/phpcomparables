@@ -93,9 +93,10 @@ class controllerSector extends Controller
      */
     public function update(Request $request, $id)
     {
-      $data = $request->validate([
-        'sec_nombre' => 'unique:tblsector,sec_nombre|required|max:80'
+      $this->validate($request,[
+        'nombre' => 'unique:tblsector,sec_nombre|required|max:80'
       ]);
+      $data['sec_nombre'] = $request->nombre;
       modelSector::where('sec_id','=',$id)->update($data);
       return redirect()->route('sector.index')
         ->with('success','El sector se ha editado con exito');

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Pagination\Paginator;
-use App\modelCliente;
-use App\modelSector;
-use App\modelHistoricoClientes;
 use App\modelOferta;
+use App\modelSector;
+use App\modelCliente;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use App\modelHistoricoClientes;
+use Illuminate\Support\Facades\DB;
 
 class controllerCliente extends Controller
 {
@@ -19,14 +19,12 @@ class controllerCliente extends Controller
      */
     public function index()
     {
-        $clientes = modelCliente::paginate(2);
+        $clientes = modelCliente::join('tblsector','tblclientes.sector_id','=','tblsector.sec_id')
+            ->orderBy('cli_nombre','asc')
+            ->paginate(20);
         if($clientes->isNotEmpty()){
-        foreach ($clientes as $cliente) {
-            $sector = modelSector::select('nombre')->where('id',$cliente->sector_id)->first();
-            $cliente = Arr::add($cliente,'sector_nombre', $sector['nombre']);
-        }
-        return view('clientes.index')
-            ->with('data',$clientes);
+            return view('clientes.index')
+                ->with('data',$clientes);
         } else {
             return redirect()->route('clientes.create')
                 ->with('success','No existen clientes aún. Por favor ingrese uno');
@@ -46,7 +44,9 @@ class controllerCliente extends Controller
             'message' => 'return confirm("¿Esta seguro que desea guardar el cliente?")',
             'method' => 'POST',
           );
-        $sector = modelSector::orderby('nombre')->get();
+        $sector = modelSector::where('sec_habilitado','=',true)
+            ->orderby('sec_nombre')
+            ->get();
         return view('clientes.form')
             ->with('sector',$sector)
             ->with('data',$data);
@@ -60,14 +60,21 @@ class controllerCliente extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nombre' => 'unique:tblclientes,nombre|max: 80|required',
+        $this->validate($request, [
+            'nombre' => 'unique:tblclientes,cli_nombre|max: 80|required',
             'sector_id' => 'required',
             'giro' => 'required',
             'actividad_economica' => 'required',
         ]);
-        $data = Arr::add($data, 'estatus', false);
-        $data = Arr::add($data, 'nombre_corto', $request->nombre_corto);
+        $data = [
+            'cli_nombre' => $request->nombre,
+            'sector_id' => $request->sector_id,
+            'cli_giro' => $request->giro,
+            'cli_actividad_economica' => $request->actividad_economica,
+            'cli_estatus'=> false,
+            'cli_nombre_corto'=> $request->nombre_corto,
+        ];
+        // dd($data);
         modelCliente::create($data);
         return redirect()->route('clientes.index')
           ->with('success','Datos almacenados con exito');
@@ -82,16 +89,12 @@ class controllerCliente extends Controller
     public function show($id)
     {
         $cliente = modelCliente::findOrFail($id);
-        $sector = modelSector::find($id);
-        $cliente->sector_nombre = $sector->nombre;
-        $historico = modelHistoricoClientes::where('cliente_id',$id)->get();
-        $ofertas = modelOferta::orderBy('anio','desc')
+        $sector = modelSector::find($cliente->sector_id);
+        $cliente->sector_nombre = $sector->sec_nombre;
+        $historico = modelHistoricoClientes::where('cliente_id', '=', $id)->get();
+        $ofertas = modelOferta::orderBy('ofe_anio','desc')
             ->where('cliente_id',$id)
             ->paginate(2);
-        foreach ($historico as $data) {
-            $sector = modelSector::find($data->sector_id);
-            $data->sector_nombre = $sector->nombre;
-        }
         return view('clientes.perfil')
             ->with('cliente',$cliente)
             ->with('historico',$historico)
@@ -108,8 +111,8 @@ class controllerCliente extends Controller
     {
         $cliente = modelCliente::findOrFail($id);
         $sector = modelSector::find($id);
-        $cliente->sector_nombre = $sector->nombre;
-        $sector = modelSector::orderby('nombre')->get();
+        $cliente->sector_nombre = $sector->sec_nombre;
+        $sector = modelSector::orderby('sec_nombre')->get();
         $data = array(
             'title' => 'Editar Cliente '.$cliente->nombre,
             'message' => 'return confirm("¿Esta seguro que desea editar el cliente? \nEstos cambios se veran reflejados en el historico")',
@@ -130,16 +133,24 @@ class controllerCliente extends Controller
      */
     public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'nombre' => 'max: 80|required|unique:tblclientes,nombre,'.$id,
+
+        $cliente = modelCliente::find($id);
+        $this->validate($request, [
+            'nombre' => 'required|max: 80|unique:tblclientes,cli_nombre,'.$id.',cli_id',
             'sector_id' => 'required',
             'giro' => 'required',
             'actividad_economica' => 'required',
         ]);
-        $data = Arr::add($data, 'nombre_corto', $request->nombre_corto);
-        $cliente = modelCliente::find($id);
+        $data = [
+            'cli_nombre' => $request->nombre,
+            'sector_id' => $request->sector_id,
+            'cli_giro' => $request->giro,
+            'cli_actividad_economica' => $request->actividad_economica,
+            'cli_estatus'=> $cliente->cli_estatus,
+            'cli_nombre_corto'=> $request->nombre_corto,
+        ];
         self::assing_clientes_to_history($id);
-        modelCliente::whereId($id)->update($data);
+        modelCliente::where('cli_id', '=', $id)->update($data);
         return redirect()->route('clientes.index')
           ->with('success','Datos almacenados con exito');
     }
@@ -162,15 +173,15 @@ class controllerCliente extends Controller
      */
     private function assing_clientes_to_history($id) {
         $cliente = modelCliente::find($id);
-        $history = array(
+        $history = [
             'cliente_id' => $id,
-            'nombre' => $cliente->nombre,
-            'nombre_corto' => $cliente->nombre_corto,
-            'giro' => $cliente->giro,
-            'actividad_economica' => $cliente->actividad_economica,
-            'estatus' => $cliente->estatus,
+            'hcl_nombre' => $cliente->cli_nombre,
+            'hcl_nombre_corto' => $cliente->cli_nombre_corto,
+            'hcl_giro' => $cliente->cli_giro,
+            'hcl_actividad_economica' => $cliente->cli_actividad_economica,
+            'hcl_estatus' => $cliente->cli_estatus,
             'sector_id' => $cliente->sector_id,
-        );
+        ];
         modelHistoricoClientes::create($history);
     }
 

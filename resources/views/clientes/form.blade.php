@@ -6,7 +6,7 @@
 @if ($data['method']=='POST')
 {{ Form::open(['route' => 'clientes.store', 'method' => $data['method'], 'onsubmit' => $data['message']]) }}
 @else
-{{ Form::open(['route' => ['clientes.update', $cliente->id], 'method' => $data['method'], 'onsubmit' => $data['message']]) }}
+{{ Form::open(['route' => ['clientes.update', $cliente->cli_id], 'method' => $data['method'], 'onsubmit' => $data['message']]) }}
 @endif
 <div class="container">
     <div class="row justify-content-center form-group">
@@ -14,7 +14,7 @@
         <input type="text" class="form-control col-sm-5" id="nombre" name="nombre"
             onkeyup="this.value = this.value.toUpperCase();" required
             @if ($data['method']=='PUT')
-                value='{{$cliente->nombre}}'
+                value='{{$cliente->cli_nombre}}'
             @endif
             >
     </div>
@@ -23,7 +23,7 @@
         <input type="text" class="form-control col-sm-5" id="nombre_corto" name="nombre_corto"
             onkeyup="this.value = this.value.toUpperCase();"
             @if ($data['method']=='PUT')
-                value='{{$cliente->nombre_corto}}'
+                value='{{$cliente->cli_nombre_corto}}'
             @endif>
     </div>
     <div class="row justify-content-center form-group">
@@ -31,9 +31,9 @@
         <select name="sector_id" id="sector_id" class="form-control col-sm-5">
             @foreach ($sector as $item)
             @if ($data['method']=='PUT' && $item->id == $cliente->sector_id)
-                <option value="{{$item->id}}" selected>{{$item->nombre}}</option>
+                <option value="{{$item->sec_id}}" selected>{{$item->sec_nombre}}</option>
             @else
-                <option value="{{$item->id}}">{{$item->nombre}}</option>
+                <option value="{{$item->sec_id}}">{{$item->sec_nombre}}</option>
             @endif
 
             @endforeach
@@ -44,7 +44,7 @@
         <input type="text" class="form-control col-sm-5" id="giro" name="giro"
             onkeyup="this.value = this.value.toUpperCase();" required
             @if ($data['method']=='PUT')
-                value='{{$cliente->giro}}'
+                value='{{$cliente->cli_giro}}'
             @endif
             >
     </div>
@@ -53,7 +53,7 @@
         <input type="text" class="form-control col-sm-5" id="actividad_economica" name="actividad_economica"
             onkeyup="this.value = this.value.toUpperCase();"
             @if ($data['method']=='PUT')
-                value='{{$cliente->actividad_economica}}'
+                value='{{$cliente->cli_actividad_economica}}'
             @endif
             >
     </div>

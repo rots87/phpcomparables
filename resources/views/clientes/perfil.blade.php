@@ -9,19 +9,19 @@
             <tbody>
                 <tr>
                     <th class="table-active" style="width:30%">Nombre</th>
-                    <td>{{$cliente->nombre}}</td>
+                    <td>{{$cliente->cli_nombre}}</td>
                 </tr>
                 <tr>
                     <th class="table-active" style="width:30%">Nombre Corto</th>
-                    <td>{{$cliente->nombre_corto}}</td>
+                    <td>{{$cliente->cli_nombre_corto}}</td>
                 </tr>
                 <tr>
                     <th class="table-active" style="width:30%">Giro</th>
-                    <td>{{$cliente->giro}}</td>
+                    <td>{{$cliente->cli_giro}}</td>
                 </tr>
                 <tr>
                     <th class="table-active" style="width:30%">Actividad Economica</th>
-                    <td>{{$cliente->actividad_economica}}</td>
+                    <td>{{$cliente->cli_actividad_economica}}</td>
                 </tr>
                 <tr>
                     <th class="table-active" style="width:30%">Sector</th>
@@ -44,10 +44,10 @@
             <tbody class="text-center">
                 @foreach ($ofertas as $oferta)
                 <tr>
-                    <th>{{$oferta->anio}}</th>
+                    <th>{{$oferta->ofe_anio}}</th>
                     <td>
                         <h5>
-                            @switch($oferta->estatus)
+                            @switch($oferta->ofe_estatus)
                             @case('ACEPTADA')
                             <span class="badge badge-success">
                                 @break
@@ -57,7 +57,7 @@
                                     @default
                                     <span class="badge badge-primary">
                                         @endswitch
-                                        {{$oferta->estatus}}
+                                        {{$oferta->ofe_estatus}}
                                     </span>
                         </h5>
                     </td>
@@ -91,12 +91,12 @@
             @foreach ($historico as $data)
             <tr>
                 <td></td>
-                <td>{{$data->nombre}}</td>
-                <td>{{$data->nombre_corto}}</td>
-                <td>{{$data->giro}}</td>
-                <td>{{$data->actividad_economica}}</td>
-                <td>{{$data->sector_nombre}}</td>
-                <td>{{$data->created_at}}</td>
+                <td>{{$data->hcl_nombre}}</td>
+                <td>{{$data->hcl_nombre_corto}}</td>
+                <td>{{$data->hcl_giro}}</td>
+                <td>{{$data->hcl_actividad_economica}}</td>
+                <td>{{$data->sec->sec_nombre}}</td>
+                <td>{{$data->updated_at}}</td>
             </tr>
             @endforeach
         </tbody>

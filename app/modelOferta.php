@@ -17,4 +17,9 @@ class modelOferta extends Model
     protected $hidden = [
       'ofe_id'
     ];
+
+    public function cliente()
+    {
+        return $this->belongsTo(modelCliente::class,'cliente_id','cli_id');
+    }
 }

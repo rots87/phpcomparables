@@ -20,4 +20,9 @@ class modelSector extends Model
     protected $hidden = [
       'sec_id'
     ];
+
+    public function hcl()
+    {
+        return $this->hasMany(modelHistoricoClientes::class,'sector_id','sec_id');
+    }
 }

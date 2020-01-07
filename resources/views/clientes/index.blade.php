@@ -20,24 +20,24 @@
             <tr>
                 {{-- {!!$x = $x + 1;!!} --}}
                 <th>1</th>
-                <td class="text-center">@if ($cliente->estatus)
+                <td class="text-center">@if ($cliente->cli_estatus)
                     <span class="badge badge-pill badge-success"><i class="fas fa-check"></i></span>
                     @else
                     <span class="badge badge-pill badge-secondary"><i class="fas fa-times-circle"></i></span>
                     @endif</td>
-                <td>{{$cliente->nombre}}</td>
-                <td>{{$cliente->nombre_corto}}</td>
-                <td>{{$cliente->giro}}</td>
-                <td>{{$cliente->actividad_economica}}</td>
-                <td>{{$cliente->sector_nombre}}</td>
-                <td>{{$cliente->anio}}</td>
+                <td>{{$cliente->cli_nombre}}</td>
+                <td>{{$cliente->cli_nombre_corto}}</td>
+                <td>{{$cliente->cli_giro}}</td>
+                <td>{{$cliente->cli_actividad_economica}}</td>
+                <td>{{$cliente->sec_nombre}}</td>
+                <td>{{$cliente->cli_anio}}</td>
                 <td>
                     <div class="row">
-                        <a href="{{route('clientes.show',$cliente->id)}}" class="btn btn-sm btn-info" role="button"><i
+                        <a href="{{route('clientes.show',$cliente->cli_id)}}" class="btn btn-sm btn-info" role="button"><i
                                 class="fas fa-search"></i></a>
-                        <a href="{{route('clientes.edit',$cliente->id)}}" class="btn btn-sm btn-warning"
+                        <a href="{{route('clientes.edit',$cliente->cli_id)}}" class="btn btn-sm btn-warning"
                             role="button"><i class="fas fa-edit"></i></a>
-                        {{ Form::open(['route' => ['clientes.destroy',$cliente->id], 'method' => 'delete', 'onsubmit' => 'return confirm("¿Esta seguro que desea eliminar el cliente? \nEsta accion no puede ser deshecha")']) }}
+                        {{ Form::open(['route' => ['clientes.destroy',$cliente->cli_id], 'method' => 'delete', 'onsubmit' => 'return confirm("¿Esta seguro que desea eliminar el cliente? \nEsta accion no puede ser deshecha")']) }}
                         <button type="submit" class="btn btn-sm btn-danger" name="button"><i
                                 class="fas fa-times-circle"></i></button>
                         {{Form::close()}}
@@ -50,7 +50,7 @@
     <div class="container">
         <div class="row justify-content-between">
             <div class="pagination-sm">
-                {{ $data->appends(['sort' => 'nombre'])->links() }}
+                {{ $data->links() }}
             </div>
             <div class="">
                 <a href="{{route('clientes.create')}}" class="btn btn-outline-success btn-sm" role="button"><i

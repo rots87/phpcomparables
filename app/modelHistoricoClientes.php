@@ -17,4 +17,14 @@ class modelHistoricoClientes extends Model
     protected $hidden = [
       'hcl_id'
     ];
+
+    public function cliente()
+    {
+        return $this->belongsTo(modelCliente::class);
+    }
+
+    public function sec()
+    {
+        return $this->belongsTo(modelSector::class,'sector_id','sec_id');
+    }
 }

@@ -18,25 +18,13 @@ class controllerOfertas extends Controller
      */
     public function index()
     {
-        $cliente = modelCliente::all();
-        if($cliente->isEmpty()){
+        if(modelCliente::first()==null) {
             return redirect()->route('clientes.create')
                 ->withErrors('No existen clientes en la base de datos');
         }
-        $ofertas = modelOferta::orderBy('anio','desc')
-                                //->orderBy('cliente_nombre','desc')
-                                ->paginate(15);
-        if($ofertas->isEmpty()){
-            return redirect()->route('ofertas.create')
-                ->withErrors('No hay ofertas ingresadas aun');
-        }
-        foreach ($ofertas as $oferta) {
-            $cliente = modelCliente::find($oferta->cliente_id);
-            $oferta->cliente_nombre = $cliente->nombre;
-        }
-
-        return view('ofertas.index')
-            ->with('ofertas', $ofertas);
+        $ofertas = modelOferta::orderBy('ofe_anio','desc')
+            ->paginate(15);
+        return view('ofertas.index', compact('ofertas'));
     }
 
     /**
@@ -46,15 +34,13 @@ class controllerOfertas extends Controller
      */
     public function create()
     {
-        $clientes = modelCliente::orderby('nombre')->get();
+        $clientes = modelCliente::orderby('cli_nombre')->get();
         $data = array(
             'title' => 'Ingreso de una nueva Oferta',
             'message' => 'return confirm("¿Esta seguro que desea guardar la oferta?")',
             'method' => 'POST',
           );
-        return view('ofertas.form')
-            ->with('clientes',$clientes)
-            ->with('data',$data);
+        return view('ofertas.form', compact('clientes','data'));
     }
 
     /**
@@ -65,16 +51,20 @@ class controllerOfertas extends Controller
      */
     public function store(Request $request)
     {
-        $ofertas = modelOferta::all();
-        $data = $ofertas->where('cliente_id',$request->cliente_id)
-                        ->where('anio',$request->anio);
-        if($data->isNotEmpty()){
-            return back()->withErrors('Ya exite una oferta para ese año y cliente');
-        };
-        $data = $request->validate([
+        $this->validate($request, [
             'cliente_id' => 'required',
             'anio' => 'required',
         ]);
+        $data = modelOferta::where('cliente_id',$request->cliente_id)
+                        ->where('ofe_anio',$request->anio)
+                        ->get();
+        if($data->isNotEmpty()){
+            return back()->withErrors('Ya exite una oferta para ese año y cliente');
+        };
+        $data = [
+            'ofe_anio' => $request->anio,
+            'cliente_id' => $request->cliente_id
+        ];
         modelOferta::create($data);
         return redirect()->route('ofertas.index')
           ->with('success','Datos almacenados con exito');
@@ -88,51 +78,69 @@ class controllerOfertas extends Controller
      */
     public function destroy($id)
     {
-        $data = modelOferta::findOrFail($id);
-        $data -> delete();
-        return redirect()->route('ofertas.index')->with('success', 'Los datos se borraron con exito');
+        try {
+            $data = modelOferta::findOrFail($id);
+            $data->delete();
+            $ofertas_cliente = modelOferta::where('cliente_id', '=', $data->cliente_id)
+            ->where('ofe_estatus', '=', 'ACEPTADA')
+            ->orderby('ofe_anio','desc')
+            ->first();
+            $cliente = modelCliente::findOrFail($data->cliente_id);
+            if (!isset($ofertas_cliente)) {
+                $cliente->cli_anio = null;
+                $cliente->cli_estatus = false;
+            } else {
+                $cliente->cli_anio = $ofertas_cliente->ofe_anio;
+            }
+            modelCliente::where('cli_id', '=', $data->cliente_id)->update($cliente->toarray());
+            return redirect()->route('ofertas.index')->with('success', 'Los datos se borraron con exito');
+        } catch (\Throwable $th) {
+            return redirect()->route('ofertas.index')
+                ->withErrors('No se pudo completar la solicitud');
+        }
+
     }
 
     public function aceptar($id){
         $data = modelOferta::findOrFail($id);
-        $data->estatus = 'ACEPTADA';
+        $data->ofe_estatus = 'ACEPTADA';
         $data2 = modelCliente::findOrFail($data->cliente_id);
-        $data2->anio = ($data2->anio < $data->anio) ? $data->anio : $data2->anio;
-        $data2->estatus = true;
-        $data3 = modelGeneralEstudios::where('anio',$data->anio)->first();
+        $data2->cli_anio = ($data2->cli_anio < $data->ofe_anio) ? $data->ofe_anio : $data2->cli_anio;
+        $data2->cli_estatus = true;
+        $data3 = modelGeneralEstudios::where('ges_anio', '=', $data->ofe_anio)->first();
         if ($data3 != null) {
-            $data3->totalEPT = $data3->totalEPT + 1;
+            $data3->ges_totalEPT += + 1;
             $ept = array(
                 'cliente_id' => $data->cliente_id,
-                'anio' => $data->anio,
-                'progreso' => 0,
+                'est_anio' => $data->ofe_anio,
+                'est_progreso' => 0,
             );
-            modelGeneralEstudios::whereId($data3->id)->update($data3->toArray());
+            modelGeneralEstudios::where('ges_id', '=', $data3->ges_id)->update($data3->toArray());
             modelEstudios::create($ept);
         } else {
             $data3 = array(
-                'anio' => $data->anio,
-                'totalEPT' => 1,
-                'progreso' => 0,
+                'ges_anio' => $data->ofe_anio,
+                'ges_totalEPT' => 1,
+                'ges_progreso' => 0,
             );
             $ept = array(
                 'cliente_id' => $data->cliente_id,
-                'anio' => $data->anio,
-                'progreso' => 0,
+                'est_anio' => $data->ofe_anio,
+                'est_progreso' => 0,
             );
             modelGeneralEstudios::create($data3);
             modelEstudios::create($ept);
         }
-        modelCliente::whereId($data->cliente_id)->update($data2->toarray());
-        modelOferta::whereId($id)->update($data->toarray());
+        modelCliente::where('cli_id', '=', $data->cliente_id)->update($data2->toarray());
+        modelOferta::where('ofe_id', '=', $id)->update($data->toarray());
         return redirect()->route('ofertas.index')
           ->with('success','la oferta fue aceptada con exito');
     }
 
     public function rechazar($id){
         $data = modelOferta::findOrFail($id);
-        $data->estatus = 'RECHAZADA';
-        modelOferta::whereId($id)->update($data->toarray());
+        $data->ofe_estatus = 'RECHAZADA';
+        modelOferta::where('ofe_id', '=', $id)->update($data->toarray());
         return redirect()->route('ofertas.index')
           ->with('success','la oferta fue rechazada con exito');
     }

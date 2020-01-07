@@ -20,4 +20,14 @@ class modelCliente extends Model
     protected $hidden = [
         'cli_id',
     ];
+
+    public function historico()
+    {
+        return $this->hasMany(modelHistoricoClientes::class,'cliente_id','cli_id');
+    }
+
+    public function oferta()
+    {
+        return $this->hasMany(modelOferta::class,'cliente_id','cli_id');
+    }
 }
