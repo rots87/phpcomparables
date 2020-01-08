@@ -17,7 +17,7 @@ class controllerArrendamientos extends Controller
     public function index()
     {
         $data = collect();
-        $firstAnio = modelArrendamientos::orderBy('anio','ASC')->first();
+        $firstAnio = modelArrendamientos::orderBy('arr_anio','ASC')->first();
         if(empty($firstAnio)){
             return redirect()->route('arrendamientos.create')
             ->withErrors('Aún no ha ingresado ningun arrendamiento');
@@ -43,8 +43,7 @@ class controllerArrendamientos extends Controller
     public function create()
     {
         $data = modelTipoArrendamiento::get();
-        return view('arrendamientos.create')
-            ->with('data',$data);
+        return view('arrendamientos.create', compact('data'));
     }
 
     /**
@@ -69,19 +68,19 @@ class controllerArrendamientos extends Controller
             $data = new modelArrendamientos;
             if($request->hasFile('foto')){
                 $imageName = (string) time().'.'.$request->file('foto')->getClientOriginalExtension();
-                $data->foto = $imageName;
+                $data->arr_foto = $imageName;
                 $path = $request->file('foto')->storeAs('localarr',$imageName);
             } else {
                 return redirect()->back()->withErrors('existe un error con el archivo adjunto');
             }
-            $data->anio = $request->anio;
+            $data->arr_anio = $request->anio;
             $data->tipoarrendamiento_id = $request->tipo;
-            $data->mt2 = $request->mt2;
-            $data->precio = $request->precio;
-            $data->direccion = $request->direccion;
-            $data->municipio = $request->municipio;
-            $data->departamento = $request->departamento;
-            $data->web = $request->web;
+            $data->arr_mt2 = $request->mt2;
+            $data->arr_precio = $request->precio;
+            $data->arr_direccion = $request->direccion;
+            $data->arr_municipio = $request->municipio;
+            $data->arr_departamento = $request->departamento;
+            $data->arr_web = $request->web;
             $data->save();
             return redirect()->route('arrendamientos.index')
                 ->with('success','Datos almacenados con exito');

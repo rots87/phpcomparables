@@ -17,4 +17,9 @@ class modelTipoArrendamiento extends Model
     protected $hidden = [
       'tar_id'
     ];
+
+    public function arrendamiento()
+    {
+        return $this->hasMany(modelArrendamientos::class,'tipoarrendamiento_id','tar_id');
+    }
 }

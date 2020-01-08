@@ -13,11 +13,11 @@
         </div>
     </div>
     <div class="row justify-content-center form-group">
-        <label for="anio" class="col-sm-2 col-form-label">Año a ser evaluado</label>
+        <label for="anio" class="col-sm-2 col-form-label">Tipo de Arrendamiento</label>
         <div class="col-sm-6">
             <select name="tipo" id="tipo" class="form-control">
                 @foreach ($data as $tipo)
-                    <option value="{!! $tipo->id !!}">{!! $tipo->nombre !!}</option>
+                    <option value="{!! $tipo->tar_id !!}">{!! $tipo->tar_nombre !!}</option>
                 @endforeach
             </select>
         </div>
