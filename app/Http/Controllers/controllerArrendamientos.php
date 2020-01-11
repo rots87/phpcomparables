@@ -23,15 +23,14 @@ class controllerArrendamientos extends Controller
             ->withErrors('Aún no ha ingresado ningun arrendamiento');
 
         }
-        for ($i = date('Y'); $i >= $firstAnio->anio; $i--) {
-            $data->push(['anio'=>$i,'value'=>modelArrendamientos::where('anio','=',$i)->count()]);
+        for ($i = date('Y'); $i >= $firstAnio->arr_anio; $i--) {
+            $data->push(['anio'=>$i,'value'=>modelArrendamientos::where('arr_anio','=',$i)->count()]);
         }
         if ($data->isEmpty()) {
             return redirect()->route('arrendamientos.create')
             ->withErrors('No existe ningun arrendamiento disponible. por favor ingrese uno.');
         } else {
-            return view('arrendamientos.index')
-            ->with('data',$data);
+            return view('arrendamientos.index',compact('data'));
         }
     }
 
@@ -90,64 +89,21 @@ class controllerArrendamientos extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $anio
+     * @param int $anio
+     * @param int $filter
      * @return \Illuminate\Http\Response
      */
     public function show($anio, $filter=null)
     {
         if($filter!=null){
-            $data = DB::table('tblarrendamientos')
-                        ->join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
-                        ->where('anio','=',$anio)
-                        ->where('tipoarrendamiento_id','=',$filter)
-                        ->get();
+            $data = modelArrendamientos::where('arr_anio','=',$anio)
+                ->where('tipoarrendamiento_id','=',$filter)
+                ->get();
         }else {
-            $data = DB::table('tblarrendamientos')
-                        ->join('tbltipoarrendamiento','tipoarrendamiento_id','tbltipoarrendamiento.id')
-                        ->where('anio','=',$anio)
-                        ->get();
+            $data = modelArrendamientos::where('arr_anio','=',$anio)->get();
         }
         $filter = modelTipoArrendamiento::get();
         // dd($data);
-        return view('arrendamientos.show')
-            ->with('data',$data)
-            ->with('filter',$filter)
-            ->with('anio',$anio);
-
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return view('arrendamientos.show',compact('data','filter','anio'));
     }
 }
