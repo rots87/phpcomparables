@@ -8,7 +8,7 @@ class modelEmpresaComparable extends Model
 {
     protected $table = 'tblempresa';
 
-    protected $primarykey = 'emp_id';
+    protected $primaryKey = 'emp_id';
 
     protected $fillable = [
         'emp_nombre','emp_nit','emp_giro','emp_expediente','emp_last_ef'
@@ -17,4 +17,9 @@ class modelEmpresaComparable extends Model
     protected $hidden = [
         'emp_id',
     ];
+
+    public function ef()
+    {
+        return $this->hasMany('tblempresacomparable','empresa_id','emp_id');
+    }
 }

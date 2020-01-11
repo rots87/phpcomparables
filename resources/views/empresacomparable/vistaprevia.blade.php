@@ -7,18 +7,18 @@
 </p>
 {!! Form::open(array('route' => 'empresacomparable.storeef', 'method' => 'POST')) !!}
 {!! Form::hidden('empresa_id', $ef->empresa_id) !!}
-{!! Form::hidden('ejercicio', $ef->ejercicio) !!}
-{!! Form::hidden('ingresos', $ef->ingresos) !!}
-{!! Form::hidden('ingresos_financieros', $ef->ingresos_financieros) !!}
-{!! Form::hidden('otros_ingresos', $ef->otros_ingresos) !!}
-{!! Form::hidden('gastos_venta', $ef->gastos_venta) !!}
-{!! Form::hidden('gastos_admon', $ef->gastos_admon) !!}
-{!! Form::hidden('gastos_finan', $ef->gastos_finan) !!}
-{!! Form::hidden('otros_gastos', $ef->otros_gastos) !!}
-{!! Form::hidden('isr', $ef->isr) !!}
-{!! Form::hidden('reserva_legal', $ef->reserva_legal) !!}
-{!! Form::hidden('gnd', $ef->gnd) !!}
-{!! Form::hidden('costo_venta', $ef->costo_venta) !!}
+{!! Form::hidden('eco_ejercicio', $ef->ejercicio) !!}
+{!! Form::hidden('eco_ingresos', $ef->ingresos) !!}
+{!! Form::hidden('eco_ingresos_financieros', $ef->ingresos_financieros) !!}
+{!! Form::hidden('eco_otros_ingresos', $ef->otros_ingresos) !!}
+{!! Form::hidden('eco_gastos_venta', $ef->gastos_venta) !!}
+{!! Form::hidden('eco_gastos_admon', $ef->gastos_admon) !!}
+{!! Form::hidden('eco_gastos_finan', $ef->gastos_finan) !!}
+{!! Form::hidden('eco_otros_gastos', $ef->otros_gastos) !!}
+{!! Form::hidden('eco_isr', $ef->isr) !!}
+{!! Form::hidden('eco_reserva_legal', $ef->reserva_legal) !!}
+{!! Form::hidden('eco_gnd', $ef->gnd) !!}
+{!! Form::hidden('eco_costo_venta', $ef->costo_venta) !!}
 
 <div class="container">
     <div class="row justify-content-center form-group">

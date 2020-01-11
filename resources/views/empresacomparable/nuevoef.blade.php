@@ -11,10 +11,10 @@
         <div class="col-sm-6">
             <select name="empresa_id" id="empresa_id" class="form-control">
                 @foreach ($empresas as $empresa)
-                @if ($empresa->id == $id)
-                <option value="{{$empresa->id}}" selected>{{$empresa->nombre}}</option>
+                @if ($empresa->emp_id == $emp)
+                <option value="{{$empresa->emp_id}}" selected>{{$empresa->emp_nombre}}</option>
                 @else
-                <option value="{{$empresa->id}}">{{$empresa->nombre}}</option>
+                <option value="{{$empresa->emp_id}}">{{$empresa->emp_nombre}}</option>
                 @endif
                 @endforeach
             </select>

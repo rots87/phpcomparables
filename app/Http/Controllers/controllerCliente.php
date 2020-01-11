@@ -141,16 +141,15 @@ class controllerCliente extends Controller
             'giro' => 'required',
             'actividad_economica' => 'required',
         ]);
-        $data = [
+        self::assing_clientes_to_history($id);
+        modelCliente::find($id)->update([
             'cli_nombre' => $request->nombre,
             'sector_id' => $request->sector_id,
             'cli_giro' => $request->giro,
             'cli_actividad_economica' => $request->actividad_economica,
             'cli_estatus'=> $cliente->cli_estatus,
             'cli_nombre_corto'=> $request->nombre_corto,
-        ];
-        self::assing_clientes_to_history($id);
-        modelCliente::where('cli_id', '=', $id)->update($data);
+        ]);
         return redirect()->route('clientes.index')
           ->with('success','Datos almacenados con exito');
     }
