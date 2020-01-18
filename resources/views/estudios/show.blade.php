@@ -17,18 +17,18 @@
                 @foreach ($data as $estudio)
                 <tr>
                     <th class="text-center">{!! $x = $x + 1;!!}</th>
-                    <td>{{ $estudio->cliente_nombre }}</td>
-                    <td class="text-center">{{ ($estudio->progreso/8)*100 }}%</td>
+                    <td>{{ $estudio->cliente->cli_nombre }}</td>
+                    <td class="text-center">{{ ($estudio->est_progreso/8)*100 }}%</td>
                     <td class="text-center">
-                        <h5><span class="badge badge-info">{{$estatus[$estudio->progreso]}}</span></h5>
+                        <h5><span class="badge badge-info">{{ $estatus[$estudio->est_progreso] }}</span></h5>
                     </td>
                     <td>
-                        {!! Form::open(['route' => ['estudios.progress', $estudio->id], 'method'=>'PUT']) !!}
+                        {!! Form::open(['route' => ['estudios.progress', $estudio->est_id], 'method'=>'PUT']) !!}
                         <div class="form-group">
                             <div class="row">
                                 <select name="progreso" id="progreso" class="form-control col-sm-9">
                                     @foreach($estatus as $estado)
-                                    @if ($estatus[$estudio->progreso] == $estatus[$loop->iteration - 1])
+                                    @if ($estatus[$estudio->est_progreso] == $estatus[$loop->iteration - 1])
                                     <option value="{{ $loop->iteration }}" selected>{{ $estado }}</option>
                                     @else
                                     <option value="{{ $loop->iteration }}">{{ $estado }}</option>

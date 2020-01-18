@@ -22,9 +22,8 @@ class controllerEstudios extends Controller
      */
     public function index()
     {
-        $data = modelGeneralEstudios::orderby('anio','DESC')->paginate(5);
-        return view('estudios.index')
-            ->with('data', $data);
+        $data = modelGeneralEstudios::orderby('ges_anio','DESC')->paginate(5);
+        return view('estudios.index', compact('data'));
     }
 
     /**
@@ -35,12 +34,7 @@ class controllerEstudios extends Controller
      */
     public function show($anio)
     {
-        $data = modelEstudios::where('anio','=',$anio)->get();
-        foreach ($data as $estudio) {
-            $nombre = modelCliente::find($estudio->cliente_id);
-            $estudio->cliente_nombre = $nombre->nombre;
-        };
-       //dd($data);
+        $data = modelEstudios::where('est_anio','=',$anio)->get();
         return view('estudios.show')
             ->with('data',$data)
             ->with('anio',$anio)
@@ -56,14 +50,14 @@ class controllerEstudios extends Controller
      */
     public function progress(Request $request, $id){
         $data = modelEstudios::findOrFail($id);
-        $value = $data->progreso;
-        $data->progreso = $request->progreso - 1;
-        $value = $data->progreso - $value;
-        $general = modelGeneralEstudios::where('anio',$data->anio)->first();
-        $general->progreso = $general->progreso + $value;
-        modelGeneralEstudios::whereId($general->id)->update($general->toArray());
-        modelEstudios::whereId($id)->update($data->toArray());
-        return redirect()->route('estudios.show',$data->anio)
+        $value = $data->est_progreso;
+        $data->est_progreso = $request->progreso - 1;
+        $value = $data->est_progreso - $value;
+        $general = modelGeneralEstudios::where('ges_anio',$data->est_anio)->first();
+        $general->ges_progreso = $general->ges_progreso + $value;
+        modelGeneralEstudios::find($general->ges_id)->update($general->toArray());
+        modelEstudios::find($id)->update($data->toArray());
+        return redirect()->route('estudios.show',$data->est_anio)
           ->with('success','Datos almacenados con exito');
     }
 
@@ -71,8 +65,8 @@ class controllerEstudios extends Controller
         $values = [];
         for($i=0; $i<9;$i++)
         {
-            $temp = modelEstudios::where('anio', '=', $anio)
-                                    ->where('progreso','=', $i);
+            $temp = modelEstudios::where('est_anio', '=', $anio)
+                                    ->where('est_progreso','=', $i);
             array_push($values, $temp->count());
         }
         //dd($values);
@@ -106,10 +100,10 @@ class controllerEstudios extends Controller
 
     private function findJoin($anio, $progreso){
         return DB::table('tblestudios')
-            ->join('tblclientes','cliente_id','tblclientes.id')
-            ->select('tblestudios.*','tblclientes.nombre')
-            ->where('tblestudios.anio','=',$anio)
-            ->where('tblestudios.progreso','=',$progreso)
+            ->join('tblclientes','cliente_id','tblclientes.cli_id')
+            ->select('tblestudios.*','tblclientes.cli_nombre')
+            ->where('tblestudios.est_anio','=',$anio)
+            ->where('tblestudios.est_progreso','=',$progreso)
             ->get();
     }
 }

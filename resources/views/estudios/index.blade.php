@@ -17,23 +17,23 @@
                 @foreach ($data as $estudios)
                 <tr>
                     <th>{{ $loop->iteration }}</th>
-                    <td>{{$estudios->anio}}</td>
-                    <td>{{$estudios->totalEPT}}</td>
+                    <td>{{$estudios->ges_anio}}</td>
+                    <td>{{$estudios->ges_totalEPT}}</td>
                     <td>
                         <div class="progress">
                             <div class="progress-bar" role="progressbar"
-                                style="width: {{ number_format($estudios->progreso/($estudios->totalEPT*8),2)*100 }}%;"
-                                aria-valuenow="{{ ($estudios->progreso/($estudios->totalEPT*8))*100 }}"
+                                style="width: {{ number_format($estudios->ges_progreso/($estudios->ges_totalEPT*8),2)*100 }}%;"
+                                aria-valuenow="{{ ($estudios->ges_progreso/($estudios->ges_totalEPT*8))*100 }}"
                                 aria-valuemin="0" aria-valuemax="100">
-                                {{ number_format($estudios->progreso/($estudios->totalEPT*8),2)*100 }}%
+                                {{ number_format($estudios->ges_progreso/($estudios->ges_totalEPT*8),2)*100 }}%
                             </div>
                         </div>
                     </td>
                     <td>
                         <div class="row">
-                            <a href="{{route('estudios.show',$estudios->anio)}}" class="btn btn-sm btn-info"
+                            <a href="{{route('estudios.show',$estudios->ges_anio)}}" class="btn btn-sm btn-info"
                                 role="button"><i class="fas fa-search"></i></a>
-                                <a href="{{route('estudios.resume',$estudios->anio)}}" class="btn btn-sm btn-success"
+                                <a href="{{route('estudios.resume',$estudios->ges_anio)}}" class="btn btn-sm btn-success"
                                     role="button"><i class="fas fa-chart-pie"></i></a>
                         </div>
                     </td>

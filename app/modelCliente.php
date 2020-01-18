@@ -30,4 +30,9 @@ class modelCliente extends Model
     {
         return $this->hasMany(modelOferta::class,'cliente_id','cli_id');
     }
+
+    public function estudio()
+    {
+        return $this->hasMany(modelEstudios::class, 'cliente_id', 'cli_id');
+    }
 }

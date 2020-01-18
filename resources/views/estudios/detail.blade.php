@@ -17,11 +17,11 @@
                     <tr>
                         @foreach ($poractualizar as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -44,11 +44,11 @@
                     <tr>
                         @foreach ($actualizado as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -71,11 +71,11 @@
                     <tr>
                         @foreach ($desarrollo as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -98,11 +98,11 @@
                     <tr>
                         @foreach ($revInterna as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -125,11 +125,11 @@
                     <tr>
                         @foreach ($correcion1 as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -152,11 +152,11 @@
                     <tr>
                         @foreach ($revCliente as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -179,11 +179,11 @@
                     <tr>
                         @foreach ($correccion2 as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -206,11 +206,11 @@
                     <tr>
                         @foreach ($imprimir as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -233,11 +233,11 @@
                     <tr>
                         @foreach ($entregado as $value)
                         @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                     </tr>
                     <tr>
                         @else
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
                         @endif
                         @endforeach
                     </tr>
@@ -260,11 +260,11 @@
                 <tr>
                 @foreach ($poractualizar as $value)
                     @if (($loop->iteration%4)==0)
-                        <td>{{ $value->nombre }}</td>
+                        <td>{{ $value->cli_nombre }}</td>
 </tr>
 <tr>
     @else
-    <td>{{ $value->nombre }}</td>
+    <td>{{ $value->cli_nombre }}</td>
     @endif
     @endforeach
 </tr>
@@ -278,11 +278,11 @@
             <tr>
                 @foreach ($actualizado as $value)
                 @if (($loop->iteration%4)==0)
-                <td>{{ $value->nombre }}</td>
+                <td>{{ $value->cli_nombre }}</td>
             </tr>
             <tr>
                 @else
-                <td>{{ $value->nombre }}</td>
+                <td>{{ $value->cli_nombre }}</td>
                 @endif
                 @endforeach
             </tr>
