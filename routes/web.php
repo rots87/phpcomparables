@@ -39,8 +39,6 @@ Route::resource('ofertas','controllerOfertas')
 ->except('show', 'edit', 'update');
 Route::resource('estudios','controllerEstudios')
     ->only('index', 'show');
-Route::resource('arrendamientos', 'controllerArrendamientos');
-->only('index', 'show');
 Route::resource('arrendamientos', 'controllerArrendamientos')
 ->except('show');
 Route::get('arrendamientos/{anio}/{filter?}','controllerArrendamientos@show')->name('arrendamientos.show');
