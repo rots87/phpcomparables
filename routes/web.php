@@ -40,6 +40,9 @@ Route::resource('ofertas','controllerOfertas')
 Route::resource('estudios','controllerEstudios')
     ->only('index', 'show');
 Route::resource('arrendamientos', 'controllerArrendamientos');
+->only('index', 'show');
+Route::resource('arrendamientos', 'controllerArrendamientos')
+->except('show');
 Route::get('arrendamientos/{anio}/{filter?}','controllerArrendamientos@show')->name('arrendamientos.show');
 Route::resource('tipoarrendamiento', 'controllerTipoArrendamiento')
     ->only('index', 'create', 'store', 'destroy');
