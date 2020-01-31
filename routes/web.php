@@ -36,7 +36,7 @@ Route::get('empresacomparable/showef/{id}','controllerEmpresaComparable@showef')
 Route::resource('sector','controllerSector');
 Route::resource('clientes','controllerCliente');
 Route::resource('ofertas','controllerOfertas')
-    ->except('show', 'edit', 'update');
+->except('show', 'edit', 'update');
 Route::resource('estudios','controllerEstudios')
     ->only('index', 'show');
 Route::resource('arrendamientos', 'controllerArrendamientos');
