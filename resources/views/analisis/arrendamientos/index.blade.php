@@ -15,10 +15,10 @@
             <tbody>
                 @foreach ($data as $arrendamiento)
                 <tr>
-                    <td>{{ $arrendamiento['anio'] }}</td>
+                    <td>{{ $arrendamiento['arr_anio'] }}</td>
                     <td>{{ $arrendamiento['value'] }}</td>
                     <td>
-                        <a href="{{route('analisis.showArrendamientos',$arrendamiento['anio'])}}" class="btn btn-sm btn-info"
+                        <a href="{{route('analisis.showArrendamientos',$arrendamiento['arr_anio'])}}" class="btn btn-sm btn-info"
                             role="button"><i class="fas fa-search"></i></a>
                     </td>
                 </tr>

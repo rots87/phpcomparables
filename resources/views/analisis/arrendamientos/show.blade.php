@@ -24,20 +24,20 @@
                 @foreach ($data as $arrendamiento)
                 <tr>
                     <th>{!! $loop->iteration !!}</th>
-                    <td>{!! $arrendamiento->nombre !!}</td>
-                    <td>{!! $arrendamiento->mt2 !!}</td>
-                    <td>{!! $arrendamiento->precio !!}</td>
-                    <td>{!! $arrendamiento->direccion !!}</td>
-                    <td>{!! $arrendamiento->municipio !!}</td>
-                    <td>{!! $arrendamiento->departamento !!}</td>
+                    <td>{!! $arrendamiento->tipo_arrendamiento->tar_nombre !!}</td>
+                    <td>{!! $arrendamiento->arr_mt2 !!}</td>
+                    <td>{!! $arrendamiento->arr_precio !!}</td>
+                    <td>{!! $arrendamiento->arr_direccion !!}</td>
+                    <td>{!! $arrendamiento->arr_municipio !!}</td>
+                    <td>{!! $arrendamiento->arr_departamento !!}</td>
                     <td>
                         <div class="row">
-                            <button type="button" id="copy" name="copy" onclick="doCopy('{!! $arrendamiento->web !!}');"
+                            <button type="button" id="copy" name="copy" onclick="doCopy('{!! $arrendamiento->arr_web !!}');"
                                 class="btn btn-primary btn-sm">
                                 <i class="far fa-copy"></i>
                             </button>
                             <button type="button" id="visit" name="visit"
-                                onclick="doUrl('{!! $arrendamiento->web !!}');" class="btn btn-success btn-sm">
+                                onclick="doUrl('{!! $arrendamiento->arr_web !!}');" class="btn btn-success btn-sm">
                                 <i class="fas fa-share"></i>
                             </button>
                         </div>
@@ -45,13 +45,13 @@
                     <td>
                         <div class="row">
                             <button type="button" id="visit" name="visit"
-                                onclick="doImage('{!! $arrendamiento->foto !!}');" class="btn btn-warning btn-sm">
+                                onclick="doImage('{!! $arrendamiento->arr_foto !!}');" class="btn btn-warning btn-sm">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
                     </td>
                     <td>
-                    <input type="checkbox" name="{!! $arrendamiento->id !!}" id="{!! $arrendamiento->id !!}">
+                    <input type="checkbox" name="{!! $arrendamiento->arr_id !!}" id="{!! $arrendamiento->arr_id !!}" value="{!! $arrendamiento->arr_id !!}">
                 </td>
                 </tr>
                 @endforeach
@@ -65,7 +65,7 @@
             <select name="filter" id="filter" class="form-control col-md-6 col-sm-3">
                 <option value="">TODOS</option>
                 @foreach ($filter as $data)
-                <option value="{!! $data->id !!}">{!! $data->nombre !!}</option>
+                <option value="{!! $data->tar_id !!}">{!! $data->tar_nombre !!}</option>
                 @endforeach
             </select>
             <button type="button" id="filter" name="filter" onclick="doFilter();" class="btn btn-primary btn-sm">
