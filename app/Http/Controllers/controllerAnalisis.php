@@ -51,7 +51,7 @@ class controllerAnalisis extends Controller
         }
         $media = self::media($comparables);
         $mediana = self::mediana($comparables);
-        dd($mediana);
+
         return view('analisis.arrendamientos.analisis', compact('comparables'));
 
     }

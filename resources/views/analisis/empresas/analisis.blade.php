@@ -1,13 +1,30 @@
 @extends('index')
 
 @section('contenido')
-<div class="container" >
-    <div class="row justify-content-between" style="margin: 10px;">
-        <button class="btn btn-primary" id="btn-precio" name="btn-precio" onclick="precio()">Analisis por Precio</button>
-        <button class="btn btn-primary" id="btn-area" name="btn-area" onclick="area()" disabled>Analisis por Precio/mt2</button>
+
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    @foreach ($comparables as $item)
+                        <th colspan="4">Comparable {{$loop->iteration}}</th>
+                    @endforeach
+                </tr>
+                <tr>
+                    @foreach ($comparables as $item)
+                        <th>2019</th>
+                        <th>2018</th>
+                        <th>Promedio</th>
+                        <th>%</th>
+                    @endforeach
+
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
-</p>
+
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
@@ -41,6 +58,7 @@
             </table>
         </div>
     </div>
+    <button onclick="myFunction()">Prueba</button>
     <div class="row">
         <div class="col-sm-4">
             <table class="table table-sm">
@@ -84,5 +102,5 @@
 @endsection
 
 @section('scripts footer')
-<script type="text/javascript" src="{!! asset('js/cuartil.js') !!}"></script>
+    <script type="text/javascript" src="{!! asset('js/cuartil.js') !!}"></script>
 @endsection
