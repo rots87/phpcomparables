@@ -8,6 +8,13 @@
     </div>
 </div>
 </p>
+{!! Form::hidden('cuenta', $comparables->count(), ['id'=>'cuenta']) !!}
+@foreach ($precio as $item)
+    {!! Form::hidden('precio'.$loop->iteration, $item,['id'=>'precio'.$loop->iteration]) !!}
+@endforeach
+@foreach ($area as $item)
+    {!! Form::hidden('area'.$loop->iteration, $item,['id'=>'area'.$loop->iteration]) !!}
+@endforeach
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
@@ -19,23 +26,23 @@
                 <tbody onload="myFunction()">
                     <tr>
                         <td>Minimo</td>
-                        <td><span id="minimo" name="minimo">2</span></td>
+                        <td><span id="minimo" name="minimo"></span></td>
                     </tr>
                     <tr>
                         <td>Primer Cuartil</td>
-                        <td><span id="primerq" name="primerq">2</span></td>
+                        <td><span id="primerq" name="primerq"></span></td>
                     </tr>
                     <tr>
                         <td>Segundo Cuartil</td>
-                        <td><span id="segundoq" name="segundoq">2</span></td>
+                        <td><span id="segundoq" name="segundoq"></span></td>
                     </tr>
                     <tr>
                         <td>Tercer Cuartil</td>
-                        <td><span id="tercerq" name="tercerq">2</span></td>
+                        <td><span id="tercerq" name="tercerq"></span></td>
                     </tr>
                     <tr>
                         <td>Maximo</td>
-                        <td><span id="maximo" name="maximo">2</span></td>
+                        <td><span id="maximo" name="maximo"></span></td>
                     </tr>
                 </tbody>
             </table>
@@ -50,7 +57,15 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>1</td>
+                        <td>Media</td>
+                        <td><span id="media" name="media"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Mediana</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Desviacion Tipica</td>
                         <td>2</td>
                     </tr>
                 </tbody>
@@ -69,7 +84,7 @@
                     @foreach ($comparables as $item)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>{{ $item['arrendamiento'] }}</td>
+                        <td>Comparable {{ $item['arrendamiento'] }}</td>
                         <td>{{ $item['precio'] / $item['area'] }}</td>
                     </tr>
                     @endforeach

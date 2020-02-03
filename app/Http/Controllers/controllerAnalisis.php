@@ -43,6 +43,8 @@ class controllerAnalisis extends Controller
 
     public function analisisArrendamientos(Request $request)
     {
+        $precio = [];
+        $area = [];
         $comparables = collect();
         $seleccionados = $request->except('_token','filter');
         foreach($seleccionados as $arrendamiento) {
@@ -51,8 +53,11 @@ class controllerAnalisis extends Controller
         }
         $media = self::media($comparables);
         $mediana = self::mediana($comparables);
-
-        return view('analisis.arrendamientos.analisis', compact('comparables'));
+        foreach ($comparables as $comparable) {
+            array_push($precio, $comparable['precio']);
+            array_push($area, $comparable['area']);
+        }
+        return view('analisis.arrendamientos.analisis', compact('comparables','precio','area'));
 
     }
 
