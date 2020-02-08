@@ -1,19 +1,29 @@
 @extends('index')
 
+@section('scripts head')
+<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.js'></script>
+<script src="{!! asset('js/app.js') !!}"></script>
+<script src="{!! asset('js/cuartil.js') !!}"></script>
+@endsection
+
 @section('contenido')
-<div class="container" >
+<div class="container">
     <div class="row justify-content-between" style="margin: 10px;">
-        <button class="btn btn-primary" id="btn-precio" name="btn-precio" onclick="precio()">Analisis por Precio</button>
-        <button class="btn btn-primary" id="btn-area" name="btn-area" onclick="area()" disabled>Analisis por Precio/mt2</button>
+        <button class="btn btn-primary" id="btn-precio" name="btn-precio" onclick="precio() ">Analisis por
+            Precio</button>
+        <button class="btn btn-primary" id="btn-area" name="btn-area" onclick="area() ">Analisis por Precio/mt2</button>
     </div>
 </div>
 </p>
 {!! Form::hidden('cuenta', $comparables->count(), ['id'=>'cuenta']) !!}
 @foreach ($precio as $item)
-    {!! Form::hidden('precio'.$loop->iteration, $item,['id'=>'precio'.$loop->iteration]) !!}
+{!! Form::hidden('precio'.$loop->iteration, $item,['id'=>'precio'.$loop->iteration]) !!}
 @endforeach
 @foreach ($area as $item)
-    {!! Form::hidden('area'.$loop->iteration, $item,['id'=>'area'.$loop->iteration]) !!}
+{!! Form::hidden('area'.$loop->iteration, $item,['id'=>'area'.$loop->iteration]) !!}
+@endforeach
+@foreach ($comparables as $item)
+{!! Form::hidden('nombre'.$loop->iteration, 'Comparable '.$item['arrendamiento'],['id'=>'nombre'.$loop->iteration]) !!}
 @endforeach
 <div class="container">
     <div class="row">
@@ -23,7 +33,7 @@
                     <th>Cuartil</th>
                     <th>Valor</th>
                 </thead>
-                <tbody onload="myFunction()">
+                <tbody>
                     <tr>
                         <td>Minimo</td>
                         <td><span id="minimo" name="minimo"></span></td>
@@ -47,6 +57,9 @@
                 </tbody>
             </table>
         </div>
+        <div class="col-sm">
+            <canvas id="grafico" name="grafico" ></canvas>
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-4">
@@ -62,11 +75,11 @@
                     </tr>
                     <tr>
                         <td>Mediana</td>
-                        <td>2</td>
+                        <td><span id="median.geo" name="median.geo"></span></td>
                     </tr>
                     <tr>
                         <td>Desviacion Tipica</td>
-                        <td>2</td>
+                        <td><span id="st.dev" name="st.dev"></span></td>
                     </tr>
                 </tbody>
             </table>
@@ -78,26 +91,22 @@
                 <thead class="thead-dark">
                     <th>#</th>
                     <th>Comparable</th>
-                    <th>Valor del mt2</th>
+                    <th><span name="valor" id="valor"></span></th>
                 </thead>
                 <tbody>
                     @foreach ($comparables as $item)
                     <tr>
                         <td>{{$loop->iteration}}</td>
-                        <td>Comparable {{ $item['arrendamiento'] }}</td>
-                        <td>{{ $item['precio'] / $item['area'] }}</td>
+                        <td><span id="n.comparable{{ $loop->iteration }}" name="n.comparable{{ $loop->iteration }}"> Comparable {{ $item['arrendamiento'] }}</span></td>
+                        <td><span name="v.comparable{{ $loop->iteration }}" id="comparable{{ $loop->iteration }}"></span>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
-        <div class="col-sm-8">
-            table
-        </div>
     </div>
 </div>
+
 @endsection
 
-@section('scripts footer')
-<script type="text/javascript" src="{!! asset('js/cuartil.js') !!}"></script>
-@endsection
